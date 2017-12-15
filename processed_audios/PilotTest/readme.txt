@@ -1,1 +1,0 @@
-Para cada algoritmo (Wiener/MMSE/BMsk/Un) serão escolhidas 12 sentenças distintas (6F e 6M). Cada sentença será apresentada em uma dada SNR, de forma ascendente (6F), então descendente (6M). Ao final, os dados relativos ao teste será armazenado em formato .mat na pasta a qual contem a série apresentada.
