@@ -2,7 +2,7 @@
 %%
 clc
 clear all
-close all
+%close all
 
 % Load results in '.mat' format
 load('TestFilipe_1.mat')
@@ -20,7 +20,22 @@ SPs = [0.35, 0.1, 10, 10; % Upper limits for g, l, u ,v
     0.01, 0.05, 5, 1; % Start points for g, l, u ,v
     0, 0, -5, 0]; % Lower limits for  g, l, u ,v
 
-[coeffs, curve] = FitPsycheCurveWH(SNR, acertosMn, SPs);
+[coeffs, curve] = FitPsycheCurveWH(SNR, acertosMn, SPs); % Try to fit without fitting toolbox
+% https://www.mathworks.com/matlabcentral/answers/126146-curve-fitting-without-the-toolbox
+% available toolboxes:
+% MATLAB                                                Version 9.1         (R2016b)
+% Simulink                                              Version 8.8         (R2016b)
+% Control System Toolbox                                Version 10.1        (R2016b)
+% DSP System Toolbox                                    Version 9.3         (R2016b)
+% Data Acquisition Toolbox                              Version 3.10        (R2016b)
+% Image Processing Toolbox                              Version 9.5         (R2016b)
+% Instrument Control Toolbox                            Version 3.10        (R2016b)
+% Optimization Toolbox                                  Version 7.5         (R2016b)
+% Regularization Tools                                  Version 4.1                 
+% Signal Processing Toolbox                             Version 7.3         (R2016b)
+% Simulink Control Design                               Version 4.4         (R2016b)
+% Statistics and Machine Learning Toolbox               Version 11.0        (R2016b)
+% Symbolic Math Toolbox                                 Version 7.1         (R2016b)
 
 %% graph
 figure;scatter(SNR,100.*acertosMn)
