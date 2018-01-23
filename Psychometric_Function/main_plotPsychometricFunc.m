@@ -5,7 +5,7 @@ clear all
 close all
 
 % Load results in '.mat' format
-load('TestBMsk_Gustavo_1.mat')
+load('TestFilipe_1.mat')
 
 % Spli into up and down results
 SNR = [-20 -8 -6 -4 -2 0 2 4 6 8 10 12 30];
