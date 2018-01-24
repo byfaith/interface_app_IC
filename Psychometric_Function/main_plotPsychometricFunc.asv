@@ -5,7 +5,7 @@ clear all
 %close all
 
 % Load results in '.mat' format
-load('Testtest.mat')
+load('TestFilipe_1.mat')
 
 % Spli into up and down results
 SNR = [-20 -8 -6 -4 -2 0 2 4 6 8 10 12 30];
@@ -46,13 +46,13 @@ ylabel('Acertos(%)')
 
 % Intert indication of SRT50 and plot curves..
 SRTpos = find(round(100*curve(:,2))==50);
-SRT50 = curve(SRTpos(1,1),1);
+SRT50 = curve(SRTpos,1);
 
 % Draw line
-xline = [50.*ones(SRTpos(1,1),1); zeros(size(curve,1)-SRTpos(1,1),1)];
+xline = [50.*ones(SRTpos,1); zeros(size(curve,1)-SRTpos,1)];
 plot(curve(:,1),xline,'--k')
 
 % Insert legend
-h = legend(['SRT50 = ' num2str(SRT50)]);
+h = legend({'$ SRT50 = 'SRT50 '$'},'Interpreter','latex');
 set(h);
 
