@@ -5,7 +5,7 @@ clear all
 %close all
 
 % Load results in '.mat' format
-load('Testtest.mat')
+load('TestFilipe_1.mat')
 
 % Spli into up and down results
 SNR = [-20 -8 -6 -4 -2 0 2 4 6 8 10 12 30];
@@ -16,7 +16,7 @@ acertosMn = (acertosDw'+acertosUp)./2;
 
 % Call function 'FitPsycheCurveWH.m'
 % This parameters are redefine in function of intelligibilit curve
-SPs = [0.35, 0.1, 10, 10; % Upper limits for g, l, u ,v
+SPs = [0.50, 0.1, 10, 10; % Upper limits for g, l, u ,v
     0.01, 0.05, 5, 1; % Start points for g, l, u ,v
     0, 0, -5, 0]; % Lower limits for  g, l, u ,v
 
