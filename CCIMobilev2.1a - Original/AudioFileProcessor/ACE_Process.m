@@ -135,7 +135,7 @@ stimulus.electrodes= q.electrodes;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 q.electrodes(q_is_idle) = 0;
 %Plot_sequence(q,['Electrodogram: ' p.lr_select ' ear']);
-plot_electrodogram(q,['Electrodogram: ' p.lr_select ' ear']);
+%plot_electrodogram(q,['Electrodogram: ' p.lr_select ' ear']);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end
 
