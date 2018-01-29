@@ -1,28 +1,17 @@
-% RealtimeStimulator_Script
-% Equivalent RealtimeStimulator GUI in a script form
-% It processes audio from the BTE in realtime for nframes and sends stimuli
-% to the coil via USB/UART
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Copyright: CRSS-CILab, UT-Dallas
-%   Authors: Hussnain Ali
-%      Date: 2015/09/28
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-clc; clear all; close all;
+function [ ] = pushToTalk( tDur,humanTest,eletrodogramPlot )
+%UNTITLED Summary of this function goes here
+%
+%    Example: pushToTalk( 3000,1,0 )
+%   Detailed explanation goes here
 global fs; fs = 16000;
-t = 5000;       % time duration in ms. The script will run for 't'ms
-check = 1;      % Check = 0 for any human testing
+t = tDur;       % time duration in ms. The script will run for 't'ms
+check = humanTest;      % Check = 0 for any human testing
                 % Check = 1 for testing integrity of the output on oscilloscope
-electrodogram_plot = 1; % = 1 will plot the electrodogram. 
+electrodogram_plot = eletrodogramPlot; % = 1 will plot the electrodogram. 
 % If t is large, more memory will be required to store the variables, 
 % which could impact the performance and realtime capabilities. 
 % For large time durations, set electrodogram_plot = 0;
 
-% add common functions path to the current directory
-currentFolder = pwd; CCIMobileFolder = fileparts(currentFolder); %currentFolder(1:end-8);
-CommonFunctionsFolder = [CCIMobileFolder '\CommonFunctions\'];
-addpath(CommonFunctionsFolder);
 
 % Initialize
 p = initialize_ACE;
@@ -32,6 +21,7 @@ outputBuffer = create_output_buffer(p);
 cl=[];el=[];
 p.General.LeftOn = 0; p.General.RightOn = 0;
 if (isfield(p,'Left') ==1)
+    %sine_token_l=uint8(abs(150.*sin(2.*pi.*(0:1:p.Left.pulses_per_frame).*0.5/p.Left.pulses_per_frame))); %figure; plot(sine_token);
     sine_token_l=uint8(150.*sin(2.*pi.*(0:1:p.Left.pulses_per_frame).*0.01)); %figure; plot(sine_token);
     indL = 1;
     bufferHistory_left = (zeros(1, p.Left.block_size - p.Left.block_shift));
@@ -39,6 +29,7 @@ if (isfield(p,'Left') ==1)
 end
 
 if (isfield(p,'Right') ==1)
+    %sine_token_r=uint8(abs(150.*sin(2.*pi.*(0:1:p.Right.pulses_per_frame).*0.5/p.Right.pulses_per_frame))); %figure; plot(sine_token);
     sine_token_r=uint8(150.*sin(2.*pi.*(0:1:p.Right.pulses_per_frame).*0.01)); %figure; plot(sine_token);
     indR = 1;
     bufferHistory_right = (zeros(1, p.Right.block_size - p.Right.block_shift));
@@ -100,7 +91,7 @@ while frame_no<nframes-1 % use while else timing won't be right
             % If check = 1, you would see sine wave on electrodes 1 - 8
             % A regular sine wave indicates that timing is correct
             for j=1:p.Left.pulses_per_frame/p.Left.Nmaxima; %p.left.Nmaxima
-                stim.l(j)= sine_token_l(indL);
+                stim.l(j)= 250; %sine_token_l(indL);
                 indL=indL+1;
                 if indL==length(sine_token_l)+1
                     indL=1;
@@ -108,7 +99,7 @@ while frame_no<nframes-1 % use while else timing won't be right
             end
             
             for j=1:p.Right.pulses_per_frame/p.Right.Nmaxima; %right.Nmaxima
-                stim.r(j)= sine_token_r(indL);
+                stim.r(j)= 250; %sine_token_r(indR);
                 indR=indR+1;
                 if indR==length(sine_token_r)+1
                     indR=1;
@@ -140,5 +131,8 @@ if (electrodogram_plot == 1)
     q.modes = 108;
     % period_cycles		= round(p.implant.rf_freq / p.implant_stim_rate);
     % p.period			= 1e6 * period_cycles / p.implant.rf_freq;	% microsecond
-    Plot_electrodogram(q,'Electrodogram');
+    plot_electrodogram(q,'Electrodogram');
 end
+
+end
+
