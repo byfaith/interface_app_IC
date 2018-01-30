@@ -2,12 +2,9 @@ function sendStreamer(signal, flagUserMap)
 % Get signal (.wav), then send to interface (UTD)
 % Input:
 %   signal:         signal in .wav format
-%   flagUserMap:    the same map will be used during one list test
+%   flagUserMap:    indicate if map will be used during one 
 
-if flagUserMap == 1
-    p = initialize_ACE;
-end;
-    
+p = initialize_ACE;
 
 % Already defined at MAP patient
 if (isfield(p,'Left')==1)
