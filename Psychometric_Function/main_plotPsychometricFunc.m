@@ -38,9 +38,10 @@ SPs = [0.50, 0.1, 10, 10; % Upper limits for g, l, u ,v
 % Symbolic Math Toolbox                                 Version 7.1         (R2016b)
 
 %% graph
-figure;scatter(SNR,100.*acertosMn)
+figure;
+h(1)=scatter(SNR,100.*acertosMn);
 hold on
-plot(curve(:,1),100.*curve(:,2))%,'LineStyle','--')
+h(2)=plot(curve(:,1),100.*curve(:,2));%,'LineStyle','--')
 xlabel('SNR')
 ylabel('Acertos(%)')
 
@@ -49,10 +50,14 @@ SRTpos = find(round(100*curve(:,2))==50);
 SRT50 = curve(SRTpos(1,1),1);
 
 % Draw line
-xline = [50.*ones(SRTpos(1,1),1); zeros(size(curve,1)-SRTpos(1,1),1)];
-plot(curve(:,1),xline,'--k')
-
+xline = [50.*ones(SRTpos(1,1),1)];% zeros(size(curve,1)-SRTpos(1,1),1)];
+h(3)=plot(curve(1:SRTpos,1),xline,'--k');
+h(5) = plot([SRT50 SRT50],[0 50],'--k');
 % Insert legend
-h = legend(['SRT50 = ' num2str(SRT50)]);
-set(h);
+h(4) = plot(SRT50,50,'kx','DisplayName',['SRT50 = ' num2str(SRT50)]);
+
+legend(h(4),'location','southeast')
+
+% h = legend(['SRT50 = ' num2str(SRT50)]);
+% set(h);
 
