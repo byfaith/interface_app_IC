@@ -16,7 +16,7 @@ acertosMn = (acertosDw'+acertosUp)./2;
 
 % Call function 'FitPsycheCurveWH.m'
 % This parameters are redefine in function of intelligibilit curve
-SPs = [0.35, 0.1, 10, 10; % Upper limits for g, l, u ,v
+SPs = [0.50, 0.1, 10, 10; % Upper limits for g, l, u ,v
     0.01, 0.05, 5, 1; % Start points for g, l, u ,v
     0, 0, -5, 0]; % Lower limits for  g, l, u ,v
 
@@ -46,13 +46,17 @@ ylabel('Acertos(%)')
 
 % Intert indication of SRT50 and plot curves..
 SRTpos = find(round(100*curve(:,2))==50);
-SRT50 = curve(SRTpos,1);
+SRT50 = curve(SRTpos(1,1),1);
 
 % Draw line
-xline = [50.*ones(SRTpos,1); zeros(size(curve,1)-SRTpos,1)];
+xline = [50.*ones(SRTpos(1,1),1); zeros(size(curve,1)-SRTpos(1,1),1)];
 plot(curve(:,1),xline,'--k')
 
 % Insert legend
-h = legend({'$ SRT50 = 'SRT50 '$'},'Interpreter','latex');
+plot(SRTpos,SRT50,'xk',sprintf('SRT50 = ' num2str(SRT50)]);
+
+
+
+h = legend(['SRT50 = ' num2str(SRT50)]);
 set(h);
 
