@@ -4,9 +4,9 @@ function sendStreamer(signal, flagUserMap)
 %   signal:         signal in .wav format
 %   flagUserMap:    the same map will be used during one list test
 
-if flagUserMap == 1
-    p = initialize_ACE;
-end;
+
+    p = initialize_ACE_mod(flagUserMap);
+
     
 
 % Already defined at MAP patient

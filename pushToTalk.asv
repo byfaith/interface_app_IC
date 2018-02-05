@@ -1,4 +1,4 @@
-function [ ] = pushToTalk( tDur,humanTest,eletrodogramPlot,flagUserMap )
+function [ ] = pushToTalk( tDur,humanTest,eletrodogramPlot )
 %UNTITLED Summary of this function goes here
 %
 %    Example: pushToTalk( 3000,1,0 )
@@ -14,7 +14,7 @@ electrodogram_plot = eletrodogramPlot; % = 1 will plot the electrodogram.
 
 
 % Initialize
-p = initialize_ACE_mod(flagUserMap);
+p = initialize_ACE_mod(app.flagUserMap);
 s = initializeBoard(p);
 outputBuffer = create_output_buffer(p);
 
