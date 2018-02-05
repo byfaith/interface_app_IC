@@ -1,4 +1,4 @@
-function signal_out = sigproc(pathnoise, speech, noise, snr, Gain, earref, AZN, flagSaveWav)
+function signal_out = sigproc(pathspeech, speech, noise, snr, Gain, earref, AZN, flagSaveWav)
 % Create an acoustic scenario considering a speech and noise signal.
 % Then apply signal processing technique to subtract background noise. All
 % the processing signal is doing by considering 1 microphone
@@ -7,10 +7,10 @@ function signal_out = sigproc(pathnoise, speech, noise, snr, Gain, earref, AZN, 
 %   speech:      clean voice signal 
 %   noise:       name of noise file ('babble' / 'ICRA' / 'SSN_IEEE')
 %   snr:         SNR [dB]
-%   Gain:        algorithm of noise reduction ('Wiener' / 'MMSE' / 'Bmsk')
+%   Gain:        algorithm of noise reduction ('Wiener' / 'MMSE' / 'BMsk')
 %   earref:      reference ear (ear that has CI) - (1: left / 2: right)
 %   AZN:         noise azimuth - [ -180 : 5 : 180 ] (speech in front!)
-%   flagSaveWav: unable (1)or disable (0) to save .wav audio files
+%   flagSaveWav: enable (1)or disable (0) to save .wav audio files
 % output: 
 %   signal_out:  processed signal, per channel
 
@@ -22,7 +22,7 @@ DIRNOISE  = './Data/Noise/';         % noise  file directory
 % NAMESPEECH = 'F0001001';
 % DIRSPEECH = 'C:\Users\Gustavo\Documents\MasterUFSC_2\EstimadoresSNR\';        % input speech file directory
 NAMESPEECH = speech;
-DIRSPEECH = pathnoise;
+DIRSPEECH = pathspeech;
 
 % output filenames---------------------------------------------------------
 NAMOUT_A  = 'Z-BinauralData_A.mat';   % data output file name
