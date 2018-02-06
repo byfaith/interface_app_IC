@@ -118,8 +118,8 @@ if (strcmp('Wiener',Gain) || strcmp('MMSE',Gain)) == 1
 	
     % Filter right signal
 	[~, ~, ~, ~, ~, ~, ~, Filter_Sig_1chan_right] = ...
-    	ics_constr_rule(Signal(:,1), speech(:,1),...
-        noiseAdj(:,1), FSnew, char(nameOutFileFilt), Gain, Method, SNREstAl);            
+    	ics_constr_rule(Signal(:,2), speech(:,2),...
+        noiseAdj(:,2), FSnew, char(nameOutFileFilt), Gain, Method, SNREstAl);            
     
 elseif strcmp('BMsk',Gain) == 1
     
@@ -134,8 +134,8 @@ elseif strcmp('BMsk',Gain) == 1
     
     % Filter right signal
 	[~, ~, ~, ~, ~, ~, ~, Filter_Sig_1chan_right] = ...
-    	ics_constr_rule(Signal(:,1), speech(:,1),...
-        noiseAdj(:,1), FSnew, char(nameOutFileFilt), Gain, Method, SNREstAl);            
+    	ics_constr_rule(Signal(:,2), speech(:,2),...
+        noiseAdj(:,2), FSnew, char(nameOutFileFilt), Gain, Method, SNREstAl);            
     
 else
     
