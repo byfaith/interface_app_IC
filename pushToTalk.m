@@ -1,4 +1,4 @@
-function [ ] = pushToTalk( tDur,humanTest,eletrodogramPlot,flagUserMap )
+function [patientName ] = pushToTalk( tDur,humanTest,eletrodogramPlot,flagUserMap )
 %UNTITLED Summary of this function goes here
 %
 %    Example: pushToTalk( 3000,1,0 )
@@ -17,6 +17,8 @@ electrodogram_plot = eletrodogramPlot; % = 1 will plot the electrodogram.
 p = initialize_ACE_mod(flagUserMap);
 s = initializeBoard(p);
 outputBuffer = create_output_buffer(p);
+
+patientName =  p.General.SubjectName ;
 
 cl=[];el=[];
 p.General.LeftOn = 0; p.General.RightOn = 0;

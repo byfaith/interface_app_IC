@@ -1,4 +1,4 @@
-function sendStreamer(signal, flagUserMap)
+function patientName = sendStreamer(signal, flagUserMap)
 % Get signal (.wav), then send to interface (UTD)
 % Input:
 %   signal:         signal in .wav format
@@ -6,7 +6,7 @@ function sendStreamer(signal, flagUserMap)
 
 
     p = initialize_ACE_mod(flagUserMap);
-
+    patientName = p.General.SubjectName ;
     
 
 % Already defined at MAP patient
