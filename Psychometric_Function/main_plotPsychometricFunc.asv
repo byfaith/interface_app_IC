@@ -13,15 +13,14 @@ acertosUp = resultados.numAcertos(1:13)./resultados.numTotalPalavras(1:13);
 acertosDw = resultados.numAcertos(14:end)./resultados.numTotalPalavras(14:end);
 acertosDw = fliplr(acertosDw');
 acertosMn = (acertosDw'+acertosUp)./2;
-% 
-% % Call function 'FitPsycheCurveWH.m'
-% % This parameters are redefine in function of intelligibilit curve
-% SPs = [0.50, 0.05, inf, inf; % Upper limits for g, l, u ,v
-%     0.01, 0.01, 5, 1; % Start points for g, l, u ,v
-%     0, 0, 0, 0]; % Lower limits for  g, l, u ,v
-% 
-% [coeffs, curve] = FitPsycheCurveWH(SNR, acertosMn, SPs); % Try to fit without fitting toolbox
 
+% Call function 'FitPsycheCurveWH.m'
+% This parameters are redefine in function of intelligibilit curve
+SPs = [0.50, 0.1, 10, 10; % Upper limits for g, l, u ,v
+    0.01, 0.05, 5, 1; % Start points for g, l, u ,v
+    0, 0, 0, 0]; % Lower limits for  g, l, u ,v
+
+[coeffs, curve] = FitPsycheCurveWH(SNR, acertosMn, SPs); % Try to fit without fitting toolbox
 % https://www.mathworks.com/matlabcentral/answers/126146-curve-fitting-without-the-toolbox
 % available toolboxes:
 % MATLAB                                                Version 9.1         (R2016b)
@@ -37,15 +36,6 @@ acertosMn = (acertosDw'+acertosUp)./2;
 % Simulink Control Design                               Version 4.4         (R2016b)
 % Statistics and Machine Learning Toolbox               Version 11.0        (R2016b)
 % Symbolic Math Toolbox                                 Version 7.1         (R2016b)
-
-
-%% Using FitPsycheCurveLogit.m
-% Fit psychometirc functions - STUDY ABOUT!
-targets = [0.25, 0.5, 0.75]; % 25%, 50% and 75% performance
-weights = ones(1,length(SNR)); % No weighting
-
-[~, curve, ~] = ...
-    FitPsycheCurveLogit(SNR', acertosMn, weights, targets);
 
 %% graph
 figure;
