@@ -3,7 +3,7 @@ function signal_out = sigproc(pathspeech, speech, noise, snr, Gain, earref, AZN,
 % Then apply signal processing technique to subtract background noise. All
 % the processing signal is doing by considering 1 microphone
 % input:
-%   pathnoise:   path of noise file
+%   pathspeech:  path of speech file
 %   speech:      clean voice signal 
 %   noise:       name of noise file ('babble' / 'ICRA' / 'SSN_IEEE')
 %   snr:         SNR [dB]
@@ -88,13 +88,12 @@ no_paramt = struct( 'TPN', TPN, 'DTN', DTN, 'ELN', ELN, ...
 % Generates Speech
 Binaural_A_SpeechGenerator2( DIROUT, DIRHRIR, DIRSPEECH, ...
 	NAMOUT_A, sp_paramt, no_paramt, info );
-            
+
 % Generates binaural signal (noisy signal, speech and noise)
 [Signal, speech, noiseAdj, snr_front_left, ...
 	snr_front_right] = ...
     Binaural_B_SignalGenerator2( DIROUT, DIRHRIR, DIRNOISE, ...
     NAMIN_B, NAMOUT_B, no_paramt, sp_paramt, info, earref );
-
 
 % Avoid overflow (x 0.3)
 Signal = 0.3.*[Signal(:,1) Signal(:,4)];
@@ -115,7 +114,7 @@ if (strcmp('Wiener',Gain) || strcmp('MMSE',Gain)) == 1
 	[~, ~, ~, ~, ~, ~, ~, Filter_Sig_1chan_left] = ...
     	ics_constr_rule(Signal(:,1), speech(:,1),...
         noiseAdj(:,1), FSnew, char(nameOutFileFilt), Gain, Method, SNREstAl);            
-	
+    
     % Filter right signal
 	[~, ~, ~, ~, ~, ~, ~, Filter_Sig_1chan_right] = ...
     	ics_constr_rule(Signal(:,2), speech(:,2),...
