@@ -7,7 +7,7 @@ function signal_out = sigproc(pathspeech, speech, noise, snr, Gain, earref, AZN,
 %   speech:      clean voice signal 
 %   noise:       name of noise file ('babble' / 'ICRA' / 'SSN_IEEE')
 %   snr:         SNR [dB]
-%   Gain:        algorithm of noise reduction ('Wiener' / 'MMSE' / 'BMsk')
+%   Gain:        algorithm of noise reduction ('Wiener' / 'MMSE' / 'BMsk / Un')
 %   earref:      reference ear (ear that has CI) - (1: left / 2: right)
 %   AZN:         noise azimuth - [ -180 : 5 : 180 ] (speech in front!)
 %   flagSaveWav: enable (1)or disable (0) to save .wav audio files
@@ -120,7 +120,7 @@ if (strcmp('Wiener',Gain) || strcmp('MMSE',Gain)) == 1
     	ics_constr_rule(Signal(:,2), speech(:,2),...
         noiseAdj(:,2), FSnew, char(nameOutFileFilt), Gain, Method, SNREstAl);            
     
-elseif strcmp('BMsk',Gain) == 1
+elseif strcmp('Binary Mask',Gain) == 1
     
 	% Name of output file (processed)
     nameOutFileFilt = strcat(DIROUT, NAMESPEECH,'_S0N',string(AZN),...
@@ -132,9 +132,18 @@ elseif strcmp('BMsk',Gain) == 1
         noiseAdj(:,1), FSnew, char(nameOutFileFilt), 0, Method);            
     
     % Filter right signal
-	[~, ~, ~, ~, ~, ~, ~, Filter_Sig_1chan_right] = ...
-    	ics_constr_rule(Signal(:,2), speech(:,2),...
-        noiseAdj(:,2), FSnew, char(nameOutFileFilt), Gain, Method, SNREstAl);            
+	[Filter_Sig_1chan_right] = ...
+    	ics(Signal(:,2), speech(:,2),...
+        noiseAdj(:,2), FSnew, char(nameOutFileFilt), 0, Method);       
+   
+elseif strcmp('Unprocessed',Gain) == 1
+    
+	% Name of output file (processed)
+    nameOutFileFilt = strcat(DIROUT, NAMESPEECH,'_S0N',string(AZN),...
+    	'_SNR',string(dB),'_',Gain,'.wav');     
+    
+    Filter_Sig_1chan_left = speech(:,1);
+    Filter_Sig_1chan_right = speech(:,2);
     
 else
     
