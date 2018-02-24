@@ -8,7 +8,7 @@ function signal_out = sigproc(pathspeech, speech, noise, snr, Gain, earref, AZN,
 %   noise:       name of noise file ('babble' / 'ICRA' / 'SSN_IEEE')
 %   snr:         SNR [dB]
 %   Gain:        algorithm of noise reduction ('Wiener' / 'MMSE' / 'BMsk / Un')
-%   earref:      reference ear (ear that has CI) - (1: left / 2: right)
+%   earref:      reference ear (ear that has CI) - (1: left / 4: right)
 %   AZN:         noise azimuth - [ -180 : 5 : 180 ] (speech in front!)
 %   flagSaveWav: enable (1)or disable (0) to save .wav audio files
 % output: 
@@ -142,8 +142,8 @@ elseif strcmp('Unprocessed',Gain) == 1
     nameOutFileFilt = strcat(DIROUT, NAMESPEECH,'_S0N',string(AZN),...
     	'_SNR',string(dB),'_',Gain,'.wav');     
     
-    Filter_Sig_1chan_left = speech(:,1);
-    Filter_Sig_1chan_right = speech(:,2);
+    Filter_Sig_1chan_left = Signal(:,1);
+    Filter_Sig_1chan_right = Signal(:,2);
     
 else
     
