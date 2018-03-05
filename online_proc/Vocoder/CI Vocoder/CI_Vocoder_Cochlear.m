@@ -274,10 +274,10 @@ analyzer_aural = Gfb_Analyzer_new(parameter.voc_sampling_frequency_hz,         .
 zerofine = Gfb_Analyzer_process(analyzer_aural, zerofine);
 disp('Filterbank Analysis 2::')
 size(zerofine)
-figure;imagesc(abs(zerofine))
-hold on
-xlabel('Time[s]')
-ylabel('Channels')
+% figure;imagesc(abs(zerofine))
+% hold on
+% xlabel('Time[s]')
+% ylabel('Channels')
 % Scale to correct channel-rms
 rms_y_channel_synthese = sqrt(mean(abs(zerofine).^2,2));
 gainfaktor_channels = rms_y_channels./(rms_y_channel_synthese+eps);

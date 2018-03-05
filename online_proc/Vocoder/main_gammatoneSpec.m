@@ -15,9 +15,9 @@ addpath('CI Vocoder');
 
 % Load the wav files into Matlab
 % Clean
-[Original_sound, fs] = audioread('F0002007.wav');
+% [Original_sound, fs] = audioread('F0002007.wav');
 % [Original_sound, fs] = audioread('M0001001.wav');
-% [Original_sound, fs] = audioread('F0009005.wav');
+[Original_sound, fs] = audioread('F0009005.wav');
 lenOr = length(Original_sound);
 
 % Unprocessed
@@ -29,9 +29,9 @@ lenOr = length(Original_sound);
 % MMSE
 % M0001001_S0N90_SNR0_Un
 % F0009005_S0N90_SNR0_Un
-[Original, fs] = audioread('F0002007_S0N90_SNR0_MMSE.wav');
+% [Original, fs] = audioread('F0002007_S0N90_SNR0_MMSE.wav');
 % [Original, fs] = audioread('M0001001_S0N90_SNR0_MMSE.wav');
-% [Original, fs] = audioread('F0009005_S0N90_SNR0_MMSE.wav');
+[Original, fs] = audioread('F0009005_S0N90_SNR0_MMSE.wav');
 Original = Original(1:lenOr,2);
 
 % Wiener
