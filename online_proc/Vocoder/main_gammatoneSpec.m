@@ -29,9 +29,9 @@ lenOr = length(Original_sound);
 % MMSE
 % M0001001_S0N90_SNR0_Un
 % F0009005_S0N90_SNR0_Un
-% [Original, fs] = audioread('F0002007_S0N90_SNR0_MMSE.wav');
+[Original, fs] = audioread('F0002007_S0N90_SNR0_MMSE.wav');
 % [Original, fs] = audioread('M0001001_S0N90_SNR0_MMSE.wav');
-[Original, fs] = audioread('F0009005_S0N90_SNR0_MMSE.wav');
+% [Original, fs] = audioread('F0009005_S0N90_SNR0_MMSE.wav');
 Original = Original(1:lenOr,2);
 
 % Wiener
@@ -41,10 +41,10 @@ Original = Original(1:lenOr,2);
 % Original = Original(1:lenOr,2);
 
 % Bnary Mask
-% [Original, fs] = audioread('F0002007_S0N90_SNR0_Binary Mask.wav');
+[Original, fs] = audioread('F0002007_S0N90_SNR0_Binary Mask.wav');
 % [Original, fs] = audioread('M0001001_S0N90_SNR0_Binary Mask.wav');
 % [Original, fs] = audioread('F0009005_S0N90_SNR0_Binary Mask.wav');
-% Original = Original(1:lenOr,2);
+Original = Original(1:lenOr,2);
 
 % Use the Vocoder with CI simulation and the MED-EL simulation
 % Vocoded_Male_MEDEL = CI_Vocoder_MEDEL(Original_Male, fs, 'CI');
