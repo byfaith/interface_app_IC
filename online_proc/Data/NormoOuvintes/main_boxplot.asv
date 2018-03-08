@@ -35,4 +35,27 @@ mmseData = [mean(mmseData1,2) mean(mmseData2,2) ...
     mean(mmseData3,2) mean(mmseData4,2)];
 
 bmskData = [mean(bmskData1,2) mean(bmskData2,2) ...
-    mean(mmseData3,2) mean(mmseData4,2)];
+    mean(bmskData3,2) mean(bmskData4,2)];
+
+unData = [mean(unData1,2) mean(unData2,2) ...
+    mean(unData3,2) mean(unData4,2)];
+
+%% plots
+% plot boxplot of all algoriths, in terms of SNR(0dB and 5dB)
+pos1 = [-.5 4.5];
+pos2 = [.5 5.5];
+figure;boxplot([wienerData(2,:)' wienerData(1,:)'], 'positions', pos1',...
+    'colors', 'r','width',0.5);
+hold on
+figure;boxplot([mmseData(2,:)' mmseData(1,:)'], 'positions', pos2',...
+    'colors', 'r','width',0.5);
+
+h1 = boxplot([wienerData(2,:)', wienerData(1,:)'], ...
+    {'0','5'});
+hold on
+h2 = boxplot([mmseData(2,:)', mmseData(1,:)'], ...
+    'Positions', pos2, {'0','5'});
+hold off
+legend([h1, h2],{'Wiener','MMSE'})
+xlabel('[dB]')
+ylabel('WCR[%]')

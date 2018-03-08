@@ -42,4 +42,27 @@ unData = [mean(unData1,2) mean(unData2,2) ...
 
 %% plots
 % plot boxplot of all algoriths, in terms of SNR(0dB and 5dB)
-figure;boxplot(
+% % FIX THE RANGE/SPACE OF THE GRAPHS
+pos1 = [0 4.5];
+pos2 = [.2 4.7];
+pos3 = [.4 4.9];
+pos4 = [.6 5.1];
+figure;
+h1 = boxplot([wienerData(2,:)' wienerData(1,:)'], [0 5]', 'positions', pos1',...
+    'colors', 'r','width',0.5);
+hold on
+
+h2 = boxplot([mmseData(2,:)' mmseData(1,:)'], [0 5]', 'positions', pos2',...
+    'colors', 'b','width',0.5);
+
+h3 = boxplot([bmskData(2,:)' bmskData(1,:)'], [0 5]', 'positions', pos3',...
+    'colors', 'k','width',0.5);
+
+h4 = boxplot([unData(2,:)' unData(1,:)'], [0 5]', 'positions', pos4',...
+    'colors', 'm','width',0.5);
+
+axis([-1 6 -.1 .5])
+legend([h1(5,1),h2(5,1),h3(5,1),h4(5,1)], {'Wiener','MMSE',...
+    'Binary Mask','Unprocessed'})
+xlabel('[dB]')
+ylabel('WCR[%]')
