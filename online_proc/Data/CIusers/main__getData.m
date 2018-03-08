@@ -14,7 +14,7 @@ hold on
 title('MMSE')
 xlabel('Trial number')
 ylabel('SNR [dB]')
-
+axis([0 35 -10 25 ])
 %% Wiener
 addpath('Data\CIusers\Marina')
 load('Marina_Wiener.mat')
@@ -28,7 +28,7 @@ hold on
 title('Wiener')
 xlabel('Trial number')
 ylabel('SNR [dB]')
-
+axis([0 35 -10 25 ])
 
 %% Binary Mask
 addpath('Data\CIusers\Marina')
@@ -43,7 +43,7 @@ hold on
 title('Binary Mask')
 xlabel('Trial number')
 ylabel('SNR [dB]')
-
+axis([0 35 -10 25 ])
 %% Unproc
 addpath('Data\CIusers\Marina')
 load('Marina_Un.mat')
@@ -57,3 +57,4 @@ hold on
 title('Unprocessed')
 xlabel('Trial number')
 ylabel('SNR [dB]')
+axis([0 35 -10 25 ])
