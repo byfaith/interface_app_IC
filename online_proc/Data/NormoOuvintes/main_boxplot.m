@@ -28,41 +28,44 @@ unData3 = [0 0 .28 0 0 0; 0 0 0 0 0 0];
 unData4 = [0 0 0 0 0 0; 0 0 0 0 0 0];
 
 % wienerData = [wienerData1 wienerData2 wienerData3 wienerData4];
-wienerData = [mean(wienerData1,2) mean(wienerData2,2) ...
+wienerData = 100.*[mean(wienerData1,2) mean(wienerData2,2) ...
     mean(wienerData3,2) mean(wienerData4,2)];
 
-mmseData = [mean(mmseData1,2) mean(mmseData2,2) ...
+% mmseData = [mmseData1 mmseData2 mmseData3 mmseData4];
+mmseData = 100.*[mean(mmseData1,2) mean(mmseData2,2) ...
     mean(mmseData3,2) mean(mmseData4,2)];
 
-bmskData = [mean(bmskData1,2) mean(bmskData2,2) ...
+% bmskData = [bmskData1 bmskData2 bmskData3 bmskData4];
+bmskData = 100.*[mean(bmskData1,2) mean(bmskData2,2) ...
     mean(bmskData3,2) mean(bmskData4,2)];
 
-unData = [mean(unData1,2) mean(unData2,2) ...
+% unData = [unData1 unData2 unData3 unData4];
+unData = 100.*[mean(unData1,2) mean(unData2,2) ...
     mean(unData3,2) mean(unData4,2)];
 
 %% plots
 % plot boxplot of all algoriths, in terms of SNR(0dB and 5dB)
 % % FIX THE RANGE/SPACE OF THE GRAPHS
 pos1 = [0 4.5];
-pos2 = [.2 4.7];
-pos3 = [.4 4.9];
-pos4 = [.6 5.1];
+pos2 = [.4 4.9];
+pos3 = [.8 5.3];
+pos4 = [1.2 5.7];
 figure;
-h1 = boxplot([wienerData(2,:)' wienerData(1,:)'], [0 5]', 'positions', pos1',...
-    'colors', 'r','width',0.5);
+h1 = boxplot([mmseData(2,:)' mmseData(1,:)'], [0 5]', 'positions', pos1',...
+    'colors', 'b','width',0.2);
 hold on
 
-h2 = boxplot([mmseData(2,:)' mmseData(1,:)'], [0 5]', 'positions', pos2',...
-    'colors', 'b','width',0.5);
+h2 = boxplot([wienerData(2,:)' wienerData(1,:)'], [0 5]', 'positions', pos2',...
+    'colors', 'r','width',0.2);
 
 h3 = boxplot([bmskData(2,:)' bmskData(1,:)'], [0 5]', 'positions', pos3',...
-    'colors', 'k','width',0.5);
+    'colors', 'k','width',0.2);
 
 h4 = boxplot([unData(2,:)' unData(1,:)'], [0 5]', 'positions', pos4',...
-    'colors', 'm','width',0.5);
+    'colors', 'm','width',0.2);
 
-axis([-1 6 -.1 .5])
-legend([h1(5,1),h2(5,1),h3(5,1),h4(5,1)], {'Wiener','MMSE',...
+axis([-1 7 -10 50])
+legend([h1(5,1),h2(5,1),h3(5,1),h4(5,1)], {'MMSE','Wiener',...
     'Binary Mask','Unprocessed'})
 xlabel('[dB]')
 ylabel('WCR[%]')

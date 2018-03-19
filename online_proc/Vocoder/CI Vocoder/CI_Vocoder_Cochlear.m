@@ -145,11 +145,11 @@ rms_y_channels = sqrt(mean(hue_signal_new.^2,2));
 disp('Filterbank Analysis 1::')
 % size(signal)
 size(hue_signal_new)
-% figure;imagesc(hue_signal_new)
+figure;imagesc(hue_signal_new)
 % figure;mesh(hue_signal_new)
-% hold on
-% xlabel('Time[s]')
-% ylabel('Channels')
+hold on
+xlabel('Frames')
+ylabel('Channels')
 % Create pulsatile pattern with correct sampling frequency and randomized sequence between electrodes
 % hue_pulse_prokanal_rand = zeros(size(y1));
 hue_pulse_prokanal_rand = zeros(size(hue_signal_new));
