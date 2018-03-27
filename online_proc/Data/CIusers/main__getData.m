@@ -3,6 +3,7 @@ clear all
 clc
 %% MMSE
 addpath('Data\CIusers\Marina')
+addpath('Marina')
 load('Marina_MMSE.mat')
 
 index = find(resultados.numTotalPalavras);
