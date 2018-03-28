@@ -21,7 +21,7 @@ addpath('CI Vocoder');
 lenOr = length(Original_sound);
 
 % Unprocessed
-% [Original_Un, fs] = audioread('F0002007_S0N90_SNR5_Un.wav');
+% [Original_Un, fs] = audioread('F0002007_S0N90_SNR0_Un.wav');
 [Original_Un, fs] = audioread('M0001001_S0N90_SNR0_Un.wav');
 % [Original_Un, fs] = audioread('F0009005_S0N90_SNR0_Un.wav');
 Original_Un = Original_Un(1:lenOr,2);
@@ -29,19 +29,19 @@ Original_Un = Original_Un(1:lenOr,2);
 % MMSE
 % M0001001_S0N90_SNR0_Un
 % F0009005_S0N90_SNR0_Un
-% [Original_MMSE, fs] = audioread('F0002007_S0N90_SNR5_MMSE.wav');
+% [Original_MMSE, fs] = audioread('F0002007_S0N90_SNR0_MMSE.wav');
 [Original_MMSE, fs] = audioread('M0001001_S0N90_SNR0_MMSE.wav');
 % [Original_MMSE, fs] = audioread('F0009005_S0N90_SNR0_MMSE.wav');
 Original_MMSE = Original_MMSE(1:lenOr,2);
 
 % Wiener
-% [Original_Wiener, fs] = audioread('F0002007_S0N90_SNR5_Wiener.wav');
+% [Original_Wiener, fs] = audioread('F0002007_S0N90_SNR0_Wiener.wav');
 [Original_Wiener, fs] = audioread('M0001001_S0N90_SNR0_Wiener.wav');
 % [Original_Wiener, fs] = audioread('F0009005_S0N90_SNR0_Wiener.wav');
 Original_Wiener = Original_Wiener(1:lenOr,2);
 
 % Binary Mask
-% [Original_BMsk, fs] = audioread('F0002007_S0N90_SNR5_Binary Mask.wav');
+% [Original_BMsk, fs] = audioread('F0002007_S0N90_SNR0_Binary Mask.wav');
 [Original_BMsk, fs] = audioread('M0001001_S0N90_SNR0_Binary Mask.wav');
 % [Original_BMsk, fs] = audioread('F0009005_S0N90_SNR0_Binary Mask.wav');
 Original_BMsk = Original_BMsk(1:lenOr,2);

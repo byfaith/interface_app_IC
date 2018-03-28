@@ -115,10 +115,22 @@ if (strcmp('Wiener',Gain) || strcmp('MMSE',Gain)) == 1
     	ics_constr_rule(Signal(:,1), speech(:,1),...
         noiseAdj(:,1), FSnew, char(nameOutFileFilt), Gain, Method, SNREstAl);            
     
+    % Normalization left signal
+    pow_speechLeft = sum(pwelch(speech(:,1)));
+    pow_Filter_Sig_1chan_left = sum(pwelch(Filter_Sig_1chan_left));
+    Filter_Sig_1chan_left = ...
+        (pow_speechLeft/pow_Filter_Sig_1chan_left).*Filter_Sig_1chan_left;
+    
     % Filter right signal
 	[~, ~, ~, ~, ~, ~, ~, Filter_Sig_1chan_right] = ...
     	ics_constr_rule(Signal(:,2), speech(:,2),...
-        noiseAdj(:,2), FSnew, char(nameOutFileFilt), Gain, Method, SNREstAl);            
+        noiseAdj(:,2), FSnew, char(nameOutFileFilt), Gain, Method, SNREstAl);
+    
+    % Normalization right signal
+    pow_speechLeft = sum(pwelch(speech(:,2)));
+    pow_Filter_Sig_1chan_right = sum(pwelch(Filter_Sig_1chan_right));
+    Filter_Sig_1chan_right = ...
+        (pow_speechLeft/pow_Filter_Sig_1chan_right).*Filter_Sig_1chan_right;
     
 elseif strcmp('Binary Mask',Gain) == 1
     
@@ -129,12 +141,24 @@ elseif strcmp('Binary Mask',Gain) == 1
     % Filter right signal
 	[Filter_Sig_1chan_left] = ...
     	ics(Signal(:,1), speech(:,1),...
-        noiseAdj(:,1), FSnew, char(nameOutFileFilt), 0, Method);            
+        noiseAdj(:,1), FSnew, char(nameOutFileFilt), 0, Method);
+    
+    % Normalization left signal
+    pow_speechLeft = sum(pwelch(speech(:,1)));
+    pow_Filter_Sig_1chan_left = sum(pwelch(Filter_Sig_1chan_left));
+    Filter_Sig_1chan_left = ...
+        (pow_speechLeft/pow_Filter_Sig_1chan_left).*Filter_Sig_1chan_left;    
     
     % Filter right signal
 	[Filter_Sig_1chan_right] = ...
     	ics(Signal(:,2), speech(:,2),...
-        noiseAdj(:,2), FSnew, char(nameOutFileFilt), 0, Method);       
+        noiseAdj(:,2), FSnew, char(nameOutFileFilt), 0, Method);
+    
+    % Normalization right signal
+    pow_speechLeft = sum(pwelch(speech(:,2)));
+    pow_Filter_Sig_1chan_right = sum(pwelch(Filter_Sig_1chan_right));
+    Filter_Sig_1chan_right = ...
+        (pow_speechLeft/pow_Filter_Sig_1chan_right).*Filter_Sig_1chan_right;    
    
 elseif strcmp('Unprocessed',Gain) == 1
     

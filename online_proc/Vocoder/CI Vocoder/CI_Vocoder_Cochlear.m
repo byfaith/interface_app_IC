@@ -148,8 +148,8 @@ size(hue_signal_new)
 figure;imagesc(hue_signal_new)
 % figure;mesh(hue_signal_new)
 hold on
-xlabel('Frames')
-ylabel('Channels')
+xlabel('Trechos')
+ylabel('Canais')
 % Create pulsatile pattern with correct sampling frequency and randomized sequence between electrodes
 % hue_pulse_prokanal_rand = zeros(size(y1));
 hue_pulse_prokanal_rand = zeros(size(hue_signal_new));
@@ -272,8 +272,8 @@ analyzer_aural = Gfb_Analyzer_new(parameter.voc_sampling_frequency_hz,         .
 % membrane)
 
 zerofine = Gfb_Analyzer_process(analyzer_aural, zerofine);
-disp('Filterbank Analysis 2::')
-size(zerofine)
+% disp('Filterbank Analysis 2::')
+% size(zerofine)
 % figure;imagesc(abs(zerofine))
 % hold on
 % xlabel('Time[s]')
