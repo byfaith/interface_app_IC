@@ -12,7 +12,8 @@ load('Ro_MMSE.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
-wrc = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
+% Get WRC x SNR
+wrcMMSE = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
 
 figure;plot(snr,'-.')
 hold on
@@ -28,7 +29,8 @@ load('Ro_Wiener.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
-wrc = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
+% Get WRC x SNR
+wrcWiener = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
 
 hold on;plot(snr,'-')
 hold on
@@ -45,7 +47,8 @@ load('Ro_BMsk.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
-wrc = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
+% Get WRC x SNR
+wrcBMsk = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
 
 plot(snr,'--')
 hold on
@@ -61,21 +64,36 @@ load('Ro_Un.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
-wrc = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
-
-% find a way to represent SNR x WRC. Then, represent curve and approximate
-% to logit function
-% Solution:
-[wrc_order, index_wrc] = sort(wrc);
-snr_order = sort(snr(index_wrc));
-figure;scatter(snr_order, wrc_order)
+% Get WRC x SNR
+wrcUn = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
+[wrcUn_order, index_wrcUn] = sort(wrcUn);
+snr_orderUn = sort(snr(index_wrcUn));
+% figure;scatter(snr_order, wrc_order)
 % Now, approximate to logit function
 
 plot(snr)
 hold on
-% title('Unprocessed')
-% xlabel('Trial number')
-% ylabel('SNR [dB]')
+xlabel('Trial number')
+ylabel('SNR [dB]')
 axis([0 35 -10 25 ])
 h = legend('MMSE', 'Wiener', 'Máscara Binária', 'Não-processado');
 set(h);
+
+
+%% Plot WRC x SNR, per each strategy. Then approximates by logit curve
+
+% Organize data - NOW GET VALUES FROM EACH SNR, THEN OBTAIN AVERAGE VALUE
+for k=1:length(snr_orderUn)
+    if k==1
+        a(k) = snr_orderUn(k);
+    elseif k~=1 && (snr_orderUn(k)~=snr_orderUn(k-1))
+        a(k) = snr_orderUn(k);
+    end
+end
+snrUn_values = a(a~=0);
+
+% scatter(snr_orderUn, wrcUn_order)
+[ffit, curve] = FitPsycheCurveWH(snr_orderUn, wrcUn_order, 0);
+% plot(curve)
+
+
