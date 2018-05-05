@@ -68,7 +68,7 @@ snr = resultados.snr_vecValues(index);
 wrcUn = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
 [wrcUn_order, index_wrcUn] = sort(wrcUn);
 snr_orderUn = sort(snr(index_wrcUn));
-figure;scatter(snr_orderUn, wrcUn_order)
+% figure;scatter(snr_orderUn, wrcUn_order)
 % Now, approximate to logit function
 
 plot(snr)
@@ -114,11 +114,21 @@ for p=1:length(snrUn_values)
 end
 wrcAvrgValues = c;
 
-% Send SNR and WRC average values
-[ffit, curve] = FitPsycheCurveWH(snrUn_values, wrcAvrgValues, 0);
+% Send SNR and WRC average values - FIX HERE!
+targets = [0.25, 0.5, 0.75]; % 25%, 50% and 75% performance
+weights = ones(1,length(SNR)); % No weighting
 
+[~, curve, ~] = ...
+    FitPsycheCurveLogit(SNR', acertosMn, weights, targets);
 
-figure;scatter(snr_orderUn, wrcUn_order)
-figure;plot(curve(:,1),100.*curve(:,2))
+% [ffit, curve] = FitPsycheCurveWH(snrUn_values, wrcAvrgValues, 0);
 
+% Plot real values and logit approximation
+figure;scatter(snr_orderUn, 100.*wrcUn_order)
+hold on;
+plot(curve(:,1),100.*curve(:,2))
+axis([2 18 0 101])
+
+% Find a way to represent all the data collected (all participants)
+% Then represent graphically
 
