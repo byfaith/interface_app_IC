@@ -68,7 +68,7 @@ snr = resultados.snr_vecValues(index);
 wrcUn = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
 [wrcUn_order, index_wrcUn] = sort(wrcUn);
 snr_orderUn = sort(snr(index_wrcUn));
-% figure;scatter(snr_order, wrc_order)
+figure;scatter(snr_orderUn, wrcUn_order)
 % Now, approximate to logit function
 
 plot(snr)
@@ -82,7 +82,7 @@ set(h);
 
 %% Plot WRC x SNR, per each strategy. Then approximates by logit curve
 
-% Organize data - NOW GET VALUES FROM EACH SNR, THEN OBTAIN AVERAGE VALUE
+% Organize SNR data 
 for k=1:length(snr_orderUn)
     if k==1
         a(k) = snr_orderUn(k);
@@ -90,10 +90,35 @@ for k=1:length(snr_orderUn)
         a(k) = snr_orderUn(k);
     end
 end
-snrUn_values = a(a~=0);
 
-% scatter(snr_orderUn, wrcUn_order)
-[ffit, curve] = FitPsycheCurveWH(snr_orderUn, wrcUn_order, 0);
-% plot(curve)
+% discart null values
+snrUn_values = a(a~=0);
+snrUn_values = snrUn_values';
+
+% Get WRC average values.
+q = 1;
+for p=1:length(snrUn_values)
+    s = 1;
+    bb = 0;
+    while snr_orderUn(q,1) == snrUn_values(p,1)
+        b(q,1) = wrcUn_order(q,1);
+        bb = bb + b(q,1);        
+        q = q+1;
+        s = s+1;
+        if q > length(snr_orderUn)
+            break
+        end        
+    end
+    s = s-1;
+    c(p,1) = bb/s;
+end
+wrcAvrgValues = c;
+
+% Send SNR and WRC average values
+[ffit, curve] = FitPsycheCurveWH(snrUn_values, wrcAvrgValues, 0);
+
+% Plot real values and logit approximation
+figure;scatter(snr_orderUn, wrcUn_order)
+figure;plot(curve(:,1),100.*curve(:,2))
 
 
