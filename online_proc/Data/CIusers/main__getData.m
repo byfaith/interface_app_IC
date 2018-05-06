@@ -1,14 +1,15 @@
 % Get SRT50 
 clear all
+close all
 clc
 %% MMSE
-addpath('Data\CIusers\Marina')
-addpath('Marina')
-load('Marina_MMSE.mat')
+% addpath('Data\CIusers\Marina')
+% addpath('Marina')
+% load('Marina_MMSE.mat')
 
-% addpath('Data\CIusers\Rosana')
-% addpath('Rosana')
-% load('Ro_MMSE.mat')
+addpath('Data\CIusers\Rosana')
+addpath('Rosana')
+load('Ro_MMSE.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -21,7 +22,7 @@ wrcMMSE = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
 snr_orderMMSE = sort(snr(index_wrcMMSE));
 
 % Get average values
-[snrMMSE_values, wrcAvrgValuesMMSE] = wrcAvrg(snr_orderMMSE, wrcMMSE_order);
+[snrMMSE_values, wrcAvrgValuesMMSE, dataBoxMMSE] = wrcAvrg(snr_orderMMSE, wrcMMSE_order);
 
 % Send SNR and WRC average values - Read about this model!
 targets = [0.25, 0.5, 0.75]; % 25%, 50% and 75% performance
@@ -32,15 +33,12 @@ weights = ones(1,length(snrMMSE_values)); % No weighting
 
 figure;plot(snr,'-.')
 hold on
-% title('MMSE')
-% xlabel('Trial number')
-% ylabel('SNR [dB]')
 axis([0 35 -10 25 ])
 %% Wiener
-addpath('Data\CIusers\Marina')
-load('Marina_Wiener.mat')
-% addpath('Data\CIusers\Rosana')
-% load('Ro_Wiener.mat')
+% addpath('Data\CIusers\Marina')
+% load('Marina_Wiener.mat')
+addpath('Data\CIusers\Rosana')
+load('Ro_Wiener.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -53,7 +51,7 @@ wrcWiener = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
 snr_orderWiener = sort(snr(index_wrcWiener));
 
 % Get average values
-[snrWiener_values, wrcAvrgValuesWiener] = wrcAvrg(snr_orderWiener, wrcWiener_order);
+[snrWiener_values, wrcAvrgValuesWiener, dataBoxWiener] = wrcAvrg(snr_orderWiener, wrcWiener_order);
 
 % Send SNR and WRC average values - Read about this model!
 targets = [0.25, 0.5, 0.75]; % 25%, 50% and 75% performance
@@ -64,16 +62,13 @@ weights = ones(1,length(snrWiener_values)); % No weighting
 
 hold on;plot(snr,'-')
 hold on
-% title('Wiener')
-% xlabel('Trial number')
-% ylabel('SNR [dB]')
 axis([0 35 -10 25 ])
 
 %% Binary Mask
-addpath('Data\CIusers\Marina')
-load('Marina_Binary.mat')
-% addpath('Data\CIusers\Rosana')
-% load('Ro_BMsk.mat')
+% addpath('Data\CIusers\Marina')
+% load('Marina_Binary.mat')
+addpath('Data\CIusers\Rosana')
+load('Ro_BMsk.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -86,7 +81,7 @@ wrcBMsk = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
 snr_orderBMsk = sort(snr(index_wrcBMsk));
 
 % Get average values
-[snrBMsk_values, wrcAvrgValuesBMsk] = wrcAvrg(snr_orderBMsk, wrcBMsk_order);
+[snrBMsk_values, wrcAvrgValuesBMsk, dataBoxBMsk] = wrcAvrg(snr_orderBMsk, wrcBMsk_order);
 
 % Send SNR and WRC average values - Read about this model!
 targets = [0.25, 0.5, 0.75]; % 25%, 50% and 75% performance
@@ -97,15 +92,12 @@ weights = ones(1,length(snrBMsk_values)); % No weighting
 
 plot(snr,'--')
 hold on
-% title('Binary Mask')
-% xlabel('Trial number')
-% ylabel('SNR [dB]')
 axis([0 35 -10 25 ])
 %% Unproc
-addpath('Data\CIusers\Marina')
-load('Marina_Un.mat')
-% addpath('Data\CIusers\Rosana')
-% load('Ro_Un.mat')
+% addpath('Data\CIusers\Marina')
+% load('Marina_Un.mat')
+addpath('Data\CIusers\Rosana')
+load('Ro_Un.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -116,7 +108,7 @@ wrcUn = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
 snr_orderUn = sort(snr(index_wrcUn));
 
 % Get average values
-[snrUn_values, wrcAvrgValues] = wrcAvrg(snr_orderUn, wrcUn_order);
+[snrUn_values, wrcAvrgValues, dataBoxUn] = wrcAvrg(snr_orderUn, wrcUn_order);
 
 % Send SNR and WRC average values - Read about this model!
 targets = [0.25, 0.5, 0.75]; % 25%, 50% and 75% performance
@@ -136,22 +128,34 @@ set(h);
 
 %% Plot WRC x SNR, per each strategy. Then approximates by logit curve
 
-% Plot real values and logit approximation
-figure;scatter(snr_orderUn, 100.*wrcUn_order)
+% scatter graph about one algorithm
+figure;scatter(snr_orderUn, 100.*wrcUn_order,'*r')
 hold on;
-plot(curveUn(:,1),100.*curveUn(:,2))
-axis([2 18 0 101])
+scatter(snr_orderMMSE, 100.*wrcMMSE_order,'b')
+scatter(snr_orderWiener, 100.*wrcWiener_order,'k')
+scatter(snr_orderBMsk, 100.*wrcBMsk_order,'c')
+
+% Try to represent in Boxplot format
+% figure;
+% boxplot(100.*wrcUn_order, snr_orderUn)
+% hold on
+% boxplot(100.*wrcMMSE_order, snr_orderMMSE)
+% boxplot(100.*wrcWiener_order, snr_orderWiener)
+% boxplot(100.*wrcBMsk_order, snr_orderBMsk)
+
+
+% logit approximation relation to average values, per algorithm, for one p.
+% figure;
+plot(curveUn(:,1), 100.*curveUn(:,2),'-r')
+hold on
+plot(curveMMSE(:,1), 100.*curveMMSE(:,2), '-.b')
+plot(curveWiener(:,1), 100.*curveWiener(:,2), '-.k')
+plot(curveBMsk(:,1), 100.*curveBMsk(:,2), 'c')
+h = legend('Não-processado', 'MMSE', 'Wiener', 'Máscara Binária');
+set(h);
+xlabel('SNR[dB]')
+ylabel('WRC[%]')
 
 % Find a way to represent all the data collected (all participants)
 % Then represent graphically
 
-figure;
-plot(curveUn(:,1), curveUn(:,2),'-r')
-hold on
-plot(curveMMSE(:,1), curveMMSE(:,2), '-.b')
-plot(curveWiener(:,1), curveWiener(:,2), '-.k')
-plot(curveBMsk(:,1), curveBMsk(:,2), 'k')
-h = legend('Não-processado', 'MMSE', 'Wiener', 'Máscara Binária');
-set(h);
-xlabel('SNR [dB]')
-ylabel('WRC[%]')
