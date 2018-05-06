@@ -3,9 +3,17 @@ clear all
 close all
 clc
 %% MMSE
-% addpath('Data\CIusers\Marina')
-% addpath('Marina')
-% load('Marina_MMSE.mat')
+addpath('Data\CIusers\Marina')
+addpath('Marina')
+load('Marina_MMSE.mat')
+
+index1 = find(resultados.numTotalPalavras); 
+snr1 = resultados.snr_vecValues(index1);
+
+% Get WRC x SNR
+wrcMMSE1 = resultados.numAcertos(index1)./resultados.numTotalPalavras(index1);
+
+% -------------
 
 addpath('Data\CIusers\Rosana')
 addpath('Rosana')
@@ -20,6 +28,21 @@ wrcMMSE = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
 % Get WRC x SNR
 [wrcMMSE_order, index_wrcMMSE] = sort(wrcMMSE);
 snr_orderMMSE = sort(snr(index_wrcMMSE));
+
+% --------- Try: concatenate variables
+[wrcMMSE_orderF, index_wrcMMSEF] = sort([wrcMMSE; wrcMMSE1]);
+snrF = [snr; snr1];
+snr_orderMMSEF = sort(snrF(index_wrcMMSEF));
+
+% ERROR IN FUNCTION: 'wrcAvrg.m': FIX IT!
+% [snrMMSE_valuesF, wrcAvrgValuesMMSEF, dataBoxMMSEF] = wrcAvrg(snr_orderMMSEF, wrcMMSE_orderF);
+% Send SNR and WRC average values - Read about this model!
+% targets = [0.25, 0.5, 0.75]; % 25%, 50% and 75% performance
+% weights = ones(1,length(snrMMSE_values)); % No weighting
+
+% [~, curveMMSEF, ~] = ...
+%     FitPsycheCurveLogit(snrMMSE_valuesF, wrcAvrgValuesMMSEF, weights, targets);
+% ---------
 
 % Get average values
 [snrMMSE_values, wrcAvrgValuesMMSE, dataBoxMMSE] = wrcAvrg(snr_orderMMSE, wrcMMSE_order);
@@ -129,11 +152,11 @@ set(h);
 %% Plot WRC x SNR, per each strategy. Then approximates by logit curve
 
 % scatter graph about one algorithm
-figure;scatter(snr_orderUn, 100.*wrcUn_order,'*r')
-hold on;
-scatter(snr_orderMMSE, 100.*wrcMMSE_order,'b')
-scatter(snr_orderWiener, 100.*wrcWiener_order,'k')
-scatter(snr_orderBMsk, 100.*wrcBMsk_order,'c')
+% figure;scatter(snr_orderUn, 100.*wrcUn_order,'*r')
+% hold on;
+% scatter(snr_orderMMSE, 100.*wrcMMSE_order,'b')
+% scatter(snr_orderWiener, 100.*wrcWiener_order,'k')
+% scatter(snr_orderBMsk, 100.*wrcBMsk_order,'c')
 
 % Try to represent in Boxplot format
 % figure;
@@ -145,16 +168,48 @@ scatter(snr_orderBMsk, 100.*wrcBMsk_order,'c')
 
 
 % logit approximation relation to average values, per algorithm, for one p.
-% figure;
+figure;
 plot(curveUn(:,1), 100.*curveUn(:,2),'-r')
 hold on
-plot(curveMMSE(:,1), 100.*curveMMSE(:,2), '-.b')
-plot(curveWiener(:,1), 100.*curveWiener(:,2), '-.k')
-plot(curveBMsk(:,1), 100.*curveBMsk(:,2), 'c')
+plot(curveMMSE(:,1), 100.*curveMMSE(:,2), '-b')
+plot(curveWiener(:,1), 100.*curveWiener(:,2), '-k')
+plot(curveBMsk(:,1), 100.*curveBMsk(:,2), '-m')
 h = legend('Não-processado', 'MMSE', 'Wiener', 'Máscara Binária');
 set(h);
 xlabel('SNR[dB]')
 ylabel('WRC[%]')
+
+% Get SRT50 index, for each algorithm
+SRTUnpos = find(round(100*curveUn(:,2))==50);
+SRT50Un = curveUn(SRTUnpos(1,1),1);
+SRTMMSEpos = find(round(100*curveMMSE(:,2))==50);
+SRT50MMSE = curveMMSE(SRTMMSEpos(1,1),1);
+SRTWienerpos = find(round(100*curveWiener(:,2))==50);
+SRT50Wiener = curveWiener(SRTWienerpos(1,1),1);
+SRTBMskpos = find(round(100*curveBMsk(:,2))==50);
+SRT50BMsk = curveBMsk(SRTBMskpos(1,1),1);
+
+% Draw line
+xlineUn = [50.*ones(SRTUnpos(1,1),1)];
+h(3)=plot(curveUn(1:SRTUnpos,1),xlineUn,'-.k');
+h(5) = plot([SRT50Un SRT50Un],[0 50],'-.k');
+xlineMMSE = [50.*ones(SRTMMSEpos(1,1),1)];
+h(3)=plot(curveMMSE(1:SRTMMSEpos,1),xlineMMSE,'-.k');
+h(5) = plot([SRT50MMSE SRT50MMSE],[0 50],'-.k');
+xlineWiener = [50.*ones(SRTWienerpos(1,1),1)];
+h(3)=plot(curveWiener(1:SRTWienerpos,1),xlineWiener,'-.k');
+h(5) = plot([SRT50Wiener SRT50Wiener],[0 50],'-.k');
+xlineBMsk = [50.*ones(SRTBMskpos(1,1),1)];
+h(3)=plot(curveBMsk(1:SRTBMskpos,1),xlineBMsk,'-.k');
+h(5) = plot([SRT50BMsk SRT50BMsk],[0 50],'-.k');
+
+% Insert legend
+h(4) = plot(SRT50Un,50,'rx','DisplayName',['SRT50_{NP} = ' num2str(SRT50Un)]);
+h(6) = plot(SRT50MMSE,50,'bx','DisplayName',['SRT50_{MMSE} = ' num2str(SRT50MMSE)]);
+h(7) = plot(SRT50Wiener,50,'kx','DisplayName',['SRT50_{Wiener} = ' num2str(SRT50Wiener)]);
+h(8) = plot(SRT50BMsk,50,'mx','DisplayName',['SRT50_{MB} = ' num2str(SRT50BMsk)]);
+legend([h(4) h(6) h(7) h(8)],'location','southeast')
+
 
 % Find a way to represent all the data collected (all participants)
 % Then represent graphically
