@@ -7,12 +7,16 @@ addpath('Data\CIusers\Marina')
 addpath('Marina')
 load('Marina_MMSE.mat')
 
-index1 = find(resultados.numTotalPalavras); 
-snr1 = resultados.snr_vecValues(index1);
-
-% Get WRC x SNR
-wrcMMSE1 = resultados.numAcertos(index1)./resultados.numTotalPalavras(index1);
-
+% index1 = find(resultados.numTotalPalavras); 
+% snr1 = resultados.snr_vecValues(index1);
+% 
+% % Get WRC x SNR
+% wrcMMSE1 = resultados.numAcertos(index1)./resultados.numTotalPalavras(index1);
+% 
+% [wrcMMSE_order1, index_wrcMMSE1] = sort(wrcMMSE1);
+% snr_orderMMSE1 = sort(snr1(index_wrcMMSE1));
+% % Data from subject 1
+% scatter(snr_orderMMSE1, wrcMMSE_order1)
 % -------------
 
 addpath('Data\CIusers\Rosana')
@@ -21,28 +25,33 @@ load('Ro_MMSE.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
-
+% 
 % Get WRC x SNR
 wrcMMSE = resultados.numAcertos(index)./resultados.numTotalPalavras(index);
 
 % Get WRC x SNR
 [wrcMMSE_order, index_wrcMMSE] = sort(wrcMMSE);
 snr_orderMMSE = sort(snr(index_wrcMMSE));
-
-% --------- Try: concatenate variables
-[wrcMMSE_orderF, index_wrcMMSEF] = sort([wrcMMSE; wrcMMSE1]);
-snrF = [snr; snr1];
-snr_orderMMSEF = sort(snrF(index_wrcMMSEF));
-
-% ERROR IN FUNCTION: 'wrcAvrg.m': FIX IT!
-% [snrMMSE_valuesF, wrcAvrgValuesMMSEF, dataBoxMMSEF] = wrcAvrg(snr_orderMMSEF, wrcMMSE_orderF);
-% Send SNR and WRC average values - Read about this model!
+% 
+% % Data from subject 2
+% hold on; figure;scatter(snr_orderMMSE, wrcMMSE_order,'r')
+% % --------- Try: concatenate variables
+% [wrcMMSE_orderF, index_wrcMMSEF] = sort([wrcMMSE; wrcMMSE1]);
+% snrF = [snr; snr1];
+% snr_orderMMSEF = sort(snrF(index_wrcMMSEF));
+% 
+% % ERROR IN FUNCTION: 'wrcAvrg.m': FIX IT!
+% [snrMMSE_valuesF, wrcAvrgValuesMMSEF, dataBoxMMSEF] = ...
+%     wrcAvrg(snr_orderMMSEF, wrcMMSE_orderF);
+% % Send SNR and WRC average values - Read about this model!
 % targets = [0.25, 0.5, 0.75]; % 25%, 50% and 75% performance
-% weights = ones(1,length(snrMMSE_values)); % No weighting
-
+% weights = ones(1,length(snrMMSE_valuesF)); % No weighting
+% 
 % [~, curveMMSEF, ~] = ...
 %     FitPsycheCurveLogit(snrMMSE_valuesF, wrcAvrgValuesMMSEF, weights, targets);
-% ---------
+% 
+% % figure;scatter(snr_orderMMSEF, 100.*wrcMMSE_orderF,'*r')
+% % ---------
 
 % Get average values
 [snrMMSE_values, wrcAvrgValuesMMSE, dataBoxMMSE] = wrcAvrg(snr_orderMMSE, wrcMMSE_order);
@@ -54,12 +63,14 @@ weights = ones(1,length(snrMMSE_values)); % No weighting
 [~, curveMMSE, ~] = ...
     FitPsycheCurveLogit(snrMMSE_values, wrcAvrgValuesMMSE, weights, targets);
 
+figure;scatter(snrMMSE_values, 100.*wrcAvrgValuesMMSE,'*r')
+
 figure;plot(snr,'-.')
 hold on
 axis([0 35 -10 25 ])
 %% Wiener
-% addpath('Data\CIusers\Marina')
-% load('Marina_Wiener.mat')
+addpath('Data\CIusers\Marina')
+load('Marina_Wiener.mat')
 addpath('Data\CIusers\Rosana')
 load('Ro_Wiener.mat')
 
@@ -88,8 +99,8 @@ hold on
 axis([0 35 -10 25 ])
 
 %% Binary Mask
-% addpath('Data\CIusers\Marina')
-% load('Marina_Binary.mat')
+addpath('Data\CIusers\Marina')
+load('Marina_Binary.mat')
 addpath('Data\CIusers\Rosana')
 load('Ro_BMsk.mat')
 
@@ -117,8 +128,8 @@ plot(snr,'--')
 hold on
 axis([0 35 -10 25 ])
 %% Unproc
-% addpath('Data\CIusers\Marina')
-% load('Marina_Un.mat')
+addpath('Data\CIusers\Marina')
+load('Marina_Un.mat')
 addpath('Data\CIusers\Rosana')
 load('Ro_Un.mat')
 
