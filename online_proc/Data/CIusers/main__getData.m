@@ -3,8 +3,12 @@ clear all
 close all
 clc
 %% MMSE
+% addpath('Data\CIusers\Marina')
+% addpath('Marina')
+% load('Marina_MMSE.mat')
+
 addpath('Data\CIusers\Marina')
-addpath('Marina')
+% addpath('Data\CIusers\Marina2')
 load('Marina_MMSE.mat')
 
 % index1 = find(resultados.numTotalPalavras); 
@@ -19,9 +23,9 @@ load('Marina_MMSE.mat')
 % scatter(snr_orderMMSE1, wrcMMSE_order1)
 % -------------
 
-addpath('Data\CIusers\Rosana')
-addpath('Rosana')
-load('Ro_MMSE.mat')
+% addpath('Data\CIusers\Rosana')
+% addpath('Rosana')
+% load('Ro_MMSE.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -63,16 +67,17 @@ weights = ones(1,length(snrMMSE_values)); % No weighting
 [~, curveMMSE, ~] = ...
     FitPsycheCurveLogit(snrMMSE_values, wrcAvrgValuesMMSE, weights, targets);
 
-figure;scatter(snrMMSE_values, 100.*wrcAvrgValuesMMSE,'*r')
+% figure;scatter(snrMMSE_values, 100.*wrcAvrgValuesMMSE,'*r')
 
 figure;plot(snr,'-.')
 hold on
 axis([0 35 -10 25 ])
 %% Wiener
 addpath('Data\CIusers\Marina')
+% addpath('Data\CIusers\Marina2')
 load('Marina_Wiener.mat')
-addpath('Data\CIusers\Rosana')
-load('Ro_Wiener.mat')
+% addpath('Data\CIusers\Rosana')
+% load('Ro_Wiener.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -99,10 +104,11 @@ hold on
 axis([0 35 -10 25 ])
 
 %% Binary Mask
+% addpath('Data\CIusers\Marina2')
 addpath('Data\CIusers\Marina')
 load('Marina_Binary.mat')
-addpath('Data\CIusers\Rosana')
-load('Ro_BMsk.mat')
+% addpath('Data\CIusers\Rosana')
+% load('Ro_BMsk.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -128,10 +134,11 @@ plot(snr,'--')
 hold on
 axis([0 35 -10 25 ])
 %% Unproc
+% addpath('Data\CIusers\Marina2')
 addpath('Data\CIusers\Marina')
 load('Marina_Un.mat')
-addpath('Data\CIusers\Rosana')
-load('Ro_Un.mat')
+% addpath('Data\CIusers\Rosana')
+% load('Ro_Un.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
