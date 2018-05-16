@@ -7,9 +7,9 @@ clc
 % addpath('Marina')
 % load('Marina_MMSE.mat')
 
-addpath('Data\CIusers\Marina')
+% addpath('Data\CIusers\Marina')
 % addpath('Data\CIusers\Marina2')
-load('Marina_MMSE.mat')
+% load('Marina_MMSE.mat')
 
 % index1 = find(resultados.numTotalPalavras); 
 % snr1 = resultados.snr_vecValues(index1);
@@ -23,9 +23,9 @@ load('Marina_MMSE.mat')
 % scatter(snr_orderMMSE1, wrcMMSE_order1)
 % -------------
 
-% addpath('Data\CIusers\Rosana')
-% addpath('Rosana')
-% load('Ro_MMSE.mat')
+addpath('Data\CIusers\Rosana')
+addpath('Rosana')
+load('Ro_MMSE.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -71,13 +71,13 @@ weights = ones(1,length(snrMMSE_values)); % No weighting
 
 figure;plot(snr,'-.')
 hold on
-axis([0 35 -10 25 ])
+% axis([0 35 -10 25 ])
 %% Wiener
-addpath('Data\CIusers\Marina')
+% addpath('Data\CIusers\Marina')
 % addpath('Data\CIusers\Marina2')
-load('Marina_Wiener.mat')
-% addpath('Data\CIusers\Rosana')
-% load('Ro_Wiener.mat')
+% load('Marina_Wiener.mat')
+addpath('Data\CIusers\Rosana')
+load('Ro_Wiener.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -101,14 +101,14 @@ weights = ones(1,length(snrWiener_values)); % No weighting
 
 hold on;plot(snr,'-')
 hold on
-axis([0 35 -10 25 ])
+% axis([0 35 -10 25 ])
 
 %% Binary Mask
-% addpath('Data\CIusers\Marina2')
-addpath('Data\CIusers\Marina')
-load('Marina_Binary.mat')
-% addpath('Data\CIusers\Rosana')
-% load('Ro_BMsk.mat')
+addpath('Data\CIusers\Marina2')
+% addpath('Data\CIusers\Marina')
+% load('Marina_Binary.mat')
+addpath('Data\CIusers\Rosana')
+load('Ro_BMsk.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -132,13 +132,13 @@ weights = ones(1,length(snrBMsk_values)); % No weighting
 
 plot(snr,'--')
 hold on
-axis([0 35 -10 25 ])
+% axis([0 35 -10 25 ])
 %% Unproc
-% addpath('Data\CIusers\Marina2')
-addpath('Data\CIusers\Marina')
-load('Marina_Un.mat')
-% addpath('Data\CIusers\Rosana')
-% load('Ro_Un.mat')
+addpath('Data\CIusers\Marina2')
+% addpath('Data\CIusers\Marina')
+% load('Marina_Un.mat')
+addpath('Data\CIusers\Rosana')
+load('Ro_Un.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -155,26 +155,32 @@ snr_orderUn = sort(snr(index_wrcUn));
 targets = [0.25, 0.5, 0.75]; % 25%, 50% and 75% performance
 weights = ones(1,length(snrUn_values)); % No weighting
 
-[~, curveUn, ~] = ...
+[coeffs, curveUn, threshold] = ...
     FitPsycheCurveLogit(snrUn_values, wrcAvrgValues, weights, targets);
 
 plot(snr)
 hold on
-xlabel('Trial number')
+xlabel('Número de Sentenças')
 ylabel('SNR [dB]')
-axis([0 35 -10 25 ])
+% axis([0 35 -10 25 ])
 h = legend('MMSE', 'Wiener', 'Máscara Binária', 'Não-processado');
 set(h);
+set(gca,'FontSize',22);
+h=gcf;
+set(h,'PaperOrientation','landscape');
+set(h,'PaperUnits','normalized');
+set(h,'PaperPosition', [0 0 1 1]);
+% print(gcf, '-dpdf', strcat('twodownS2','norm'));
 
 
 %% Plot WRC x SNR, per each strategy. Then approximates by logit curve
 
 % scatter graph about one algorithm
-% figure;scatter(snr_orderUn, 100.*wrcUn_order,'*r')
-% hold on;
-% scatter(snr_orderMMSE, 100.*wrcMMSE_order,'b')
-% scatter(snr_orderWiener, 100.*wrcWiener_order,'k')
-% scatter(snr_orderBMsk, 100.*wrcBMsk_order,'c')
+figure;scatter(snr_orderUn, 100.*wrcUn_order,'*r')
+hold on;
+scatter(snr_orderMMSE, 100.*wrcMMSE_order,'b')
+scatter(snr_orderWiener, 100.*wrcWiener_order,'*k')
+scatter(snr_orderBMsk, 100.*wrcBMsk_order,'m')
 
 % Try to represent in Boxplot format
 % figure;
@@ -186,7 +192,7 @@ set(h);
 
 
 % logit approximation relation to average values, per algorithm, for one p.
-figure;
+% figure;
 plot(curveUn(:,1), 100.*curveUn(:,2),'-r')
 hold on
 plot(curveMMSE(:,1), 100.*curveMMSE(:,2), '-b')
@@ -195,7 +201,7 @@ plot(curveBMsk(:,1), 100.*curveBMsk(:,2), '-m')
 h = legend('Não-processado', 'MMSE', 'Wiener', 'Máscara Binária');
 set(h);
 xlabel('SNR[dB]')
-ylabel('WRC[%]')
+ylabel('Taxa de Reconhecimento de Palavras[%]')
 
 % Get SRT50 index, for each algorithm
 SRTUnpos = find(round(100*curveUn(:,2))==50);
@@ -227,6 +233,13 @@ h(6) = plot(SRT50MMSE,50,'bx','DisplayName',['SRT50_{MMSE} = ' num2str(SRT50MMSE
 h(7) = plot(SRT50Wiener,50,'kx','DisplayName',['SRT50_{Wiener} = ' num2str(SRT50Wiener)]);
 h(8) = plot(SRT50BMsk,50,'mx','DisplayName',['SRT50_{MB} = ' num2str(SRT50BMsk)]);
 legend([h(4) h(6) h(7) h(8)],'location','southeast')
+
+set(gca,'FontSize',22);
+h=gcf;
+set(h,'PaperOrientation','landscape');
+set(h,'PaperUnits','normalized');
+set(h,'PaperPosition', [0 0 1 1]);
+% print(gcf, '-dpdf', strcat('logitS1'));
 
 
 % Find a way to represent all the data collected (all participants)

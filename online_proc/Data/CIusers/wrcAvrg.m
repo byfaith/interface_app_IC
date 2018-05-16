@@ -14,7 +14,7 @@ end
 pos = 0;
 for l=1:length(snr_orderUn)
     if snr_orderUn(l) == 0 && pos == 0
-        pos = l
+        pos = l;
     end
 end
 if pos ~= 0
