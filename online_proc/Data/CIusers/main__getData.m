@@ -23,9 +23,14 @@ clc
 % scatter(snr_orderMMSE1, wrcMMSE_order1)
 % -------------
 
-addpath('Data\CIusers\Rosana')
-addpath('Rosana')
-load('Ro_MMSE.mat')
+% addpath('Data\CIusers\Rosana')
+% addpath('Rosana')
+% load('Ro_MMSE.mat')
+
+
+addpath('Data\CIusers\Adelaide')
+addpath('Adelaide')
+load('MMSE1.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -76,8 +81,11 @@ hold on
 % addpath('Data\CIusers\Marina')
 % addpath('Data\CIusers\Marina2')
 % load('Marina_Wiener.mat')
-addpath('Data\CIusers\Rosana')
-load('Ro_Wiener.mat')
+% addpath('Data\CIusers\Rosana')
+% load('Ro_Wiener.mat')
+addpath('Data\CIusers\Adelaide')
+addpath('Adelaide')
+load('W1.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -104,11 +112,15 @@ hold on
 % axis([0 35 -10 25 ])
 
 %% Binary Mask
-addpath('Data\CIusers\Marina2')
+% addpath('Data\CIusers\Marina2')
 % addpath('Data\CIusers\Marina')
 % load('Marina_Binary.mat')
-addpath('Data\CIusers\Rosana')
-load('Ro_BMsk.mat')
+% addpath('Data\CIusers\Rosana')
+% load('Ro_BMsk.mat')
+addpath('Data\CIusers\Adelaide')
+addpath('Adelaide')
+load('BM1.mat')
+
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -134,11 +146,15 @@ plot(snr,'--')
 hold on
 % axis([0 35 -10 25 ])
 %% Unproc
-addpath('Data\CIusers\Marina2')
+% addpath('Data\CIusers\Marina2')
 % addpath('Data\CIusers\Marina')
 % load('Marina_Un.mat')
-addpath('Data\CIusers\Rosana')
-load('Ro_Un.mat')
+% addpath('Data\CIusers\Rosana')
+% load('Ro_Un.mat')
+addpath('Data\CIusers\Adelaide')
+addpath('Adelaide')
+load('UN1.mat')
+
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -170,7 +186,7 @@ h=gcf;
 set(h,'PaperOrientation','landscape');
 set(h,'PaperUnits','normalized');
 set(h,'PaperPosition', [0 0 1 1]);
-% print(gcf, '-dpdf', strcat('twodownS2','norm'));
+% print(gcf, '-dpdf', strcat('twodownS3','norm'));
 
 
 %% Plot WRC x SNR, per each strategy. Then approximates by logit curve
@@ -239,7 +255,7 @@ h=gcf;
 set(h,'PaperOrientation','landscape');
 set(h,'PaperUnits','normalized');
 set(h,'PaperPosition', [0 0 1 1]);
-% print(gcf, '-dpdf', strcat('logitS1'));
+% print(gcf, '-dpdf', strcat('logitS3'));
 
 
 % Find a way to represent all the data collected (all participants)
