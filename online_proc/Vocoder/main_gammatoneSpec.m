@@ -100,4 +100,4 @@ play(player);
 % title('Envelope Amplitude')
 % xlabel('time[s]')
 % ylabel('Amplitude')
-% End of File
+% % End of File

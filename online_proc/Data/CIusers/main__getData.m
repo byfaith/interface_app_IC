@@ -30,7 +30,7 @@ clc
 
 addpath('Data\CIusers\Adelaide')
 addpath('Adelaide')
-load('MMSE1.mat')
+load('MMSE.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -72,6 +72,7 @@ weights = ones(1,length(snrMMSE_values)); % No weighting
 [~, curveMMSE, ~] = ...
     FitPsycheCurveLogit(snrMMSE_values, wrcAvrgValuesMMSE, weights, targets);
 
+
 % figure;scatter(snrMMSE_values, 100.*wrcAvrgValuesMMSE,'*r')
 
 figure;plot(snr,'-.')
@@ -85,7 +86,7 @@ hold on
 % load('Ro_Wiener.mat')
 addpath('Data\CIusers\Adelaide')
 addpath('Adelaide')
-load('W1.mat')
+load('W.mat')
 
 index = find(resultados.numTotalPalavras);
 snr = resultados.snr_vecValues(index);
@@ -107,6 +108,7 @@ weights = ones(1,length(snrWiener_values)); % No weighting
 [~, curveWiener, ~] = ...
     FitPsycheCurveLogit(snrWiener_values, wrcAvrgValuesWiener, weights, targets);
 
+
 hold on;plot(snr,'-')
 hold on
 % axis([0 35 -10 25 ])
@@ -119,7 +121,7 @@ hold on
 % load('Ro_BMsk.mat')
 addpath('Data\CIusers\Adelaide')
 addpath('Adelaide')
-load('BM1.mat')
+load('BM.mat')
 
 
 index = find(resultados.numTotalPalavras);
@@ -153,7 +155,7 @@ hold on
 % load('Ro_Un.mat')
 addpath('Data\CIusers\Adelaide')
 addpath('Adelaide')
-load('UN1.mat')
+load('UN.mat')
 
 
 index = find(resultados.numTotalPalavras);
@@ -173,6 +175,7 @@ weights = ones(1,length(snrUn_values)); % No weighting
 
 [coeffs, curveUn, threshold] = ...
     FitPsycheCurveLogit(snrUn_values, wrcAvrgValues, weights, targets);
+
 
 plot(snr)
 hold on
@@ -250,14 +253,31 @@ h(7) = plot(SRT50Wiener,50,'kx','DisplayName',['SRT50_{Wiener} = ' num2str(SRT50
 h(8) = plot(SRT50BMsk,50,'mx','DisplayName',['SRT50_{MB} = ' num2str(SRT50BMsk)]);
 legend([h(4) h(6) h(7) h(8)],'location','southeast')
 
-set(gca,'FontSize',22);
-h=gcf;
-set(h,'PaperOrientation','landscape');
-set(h,'PaperUnits','normalized');
-set(h,'PaperPosition', [0 0 1 1]);
+% set(gca,'FontSize',22);
+% h=gcf;
+% set(h,'PaperOrientation','landscape');
+% set(h,'PaperUnits','normalized');
+% set(h,'PaperPosition', [0 0 1 1]);
 % print(gcf, '-dpdf', strcat('logitS3'));
 
 
 % Find a way to represent all the data collected (all participants)
 % Then represent graphically
 
+%% Represent error between reference approximate curve (unproc)
+size(curveUn)
+size(curveMMSE)
+size(curveWiener)
+size(curveBMsk)
+
+% Resample set of data based on higher vector
+% a = resample(curveUn(:,1), length(curveBMsk), length(curveUn));
+curveBMskR = resample(curveBMsk(:,2), length(curveMMSE), length(curveBMsk));
+curveWienerR = resample(curveWiener(:,2), length(curveMMSE), length(curveWiener));
+curveUnR = resample(curveUn(:,2), length(curveMMSE), length(curveUn));
+
+% HERE: obtain boxplot now, for all subjects!
+% But first: organize code!
+errBMskUn   = curveUnR - curveBMskR;
+errWienerUn  = curveUnR - curveWienerR;
+errMMSEUn = curveUnR - curveMMSE(:,2);
