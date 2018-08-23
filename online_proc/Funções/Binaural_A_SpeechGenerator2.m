@@ -25,6 +25,9 @@ end
 %**************************************************************************
 
 FnamSpeech = strcat( DIRSPEECH, sp_paramt.NAMESPEECH, '.wav' );
+if ~exist(FnamSpeech, 'file')
+   FnamSpeech(end-2:end) = 'WAV';   %if the .wav file does not exist, change extension to .WAV 
+end
 FnamVad    = strcat( DIRSPEECH, sp_paramt.NAMESPEECH, '_DTS',num2str(sp_paramt.DTS), '_ELS', num2str(sp_paramt.ELS), '_AZS', num2str(sp_paramt.AZS), '_vad.mat' );
 FnamSpOut  = strcat( DIROUT, sp_paramt.NAMESPEECH, '_DTS', num2str(sp_paramt.DTS), '_ELS', num2str(sp_paramt.ELS), '_AZS', num2str(sp_paramt.AZS), '_front.wav' );
 FnamOut    = strcat( DIROUT, NAMOUT );

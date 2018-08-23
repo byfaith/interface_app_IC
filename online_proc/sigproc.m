@@ -101,6 +101,10 @@ speech = 0.3.*[speech(:,1) speech(:,4)];
 noiseAdj = 0.3.*[noiseAdj(:,1) noiseAdj(:,4)];
             
 FnamSpeech = strcat( DIRSPEECH, sp_paramt.NAMESPEECH, '.wav' );
+if ~exist(FnamSpeech, 'file')
+   FnamSpeech(end-2:end) = 'WAV';   %if the .wav file does not exist, change extension to .WAV 
+end
+
 audioInformations = audioinfo(FnamSpeech);
 
 
@@ -171,7 +175,7 @@ elseif strcmp('Unprocessed',Gain) == 1
     
 else
     
-    disp('Algoritmos possíveis: Wiener / MMSE / BMsk');    
+    disp('Algoritmos possï¿½veis: Wiener / MMSE / BMsk');    
     
 end
 
