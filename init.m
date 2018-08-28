@@ -2,7 +2,10 @@
 % function to initialize path and adapt to ML version
 % run this before start testing
 
-% loads online/* directories to path
+%restore defaut path
+restoredefaultpath;
+
+% loads online_proc/* directories to path
 home = strcat(pwd,filesep); %current directory
 addpath(genpath(strcat(home,'online_proc',filesep)));
 
