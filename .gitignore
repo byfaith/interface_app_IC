@@ -1,0 +1,8 @@
+## .gitignore - files to be ignored by git
+
+#ignore temp files
+*~
+
+#files from Results dir
+online_proc/Results/*
+ 
