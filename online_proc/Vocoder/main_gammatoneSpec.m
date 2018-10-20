@@ -15,36 +15,37 @@ addpath('CI Vocoder');
 
 % Load the wav files into Matlab
 % Clean
-% [Original_sound, fs] = audioread('F0002007.wav');
-[Original_sound, fs] = audioread('M0001001.wav');
+[Original_sound, fs] = audioread('F0002007.wav');
+% [Original_sound, fs] = audioread('M0001001.wav');
 % [Original_sound, fs] = audioread('F0009005.wav');
 lenOr = length(Original_sound);
 
 % Unprocessed
 % [Original_Un, fs] = audioread('F0002007_S0N90_SNR0_Un.wav');
-[Original_Un, fs] = audioread('M0001001_S0N90_SNR0_Un.wav');
+[Original_Un, fs] = audioread('F0002007_noisy.wav');
+% [Original_Un, fs] = audioread('M0001001_S0N90_SNR0_Un.wav');
 % [Original_Un, fs] = audioread('F0009005_S0N90_SNR0_Un.wav');
-Original_Un = Original_Un(1:lenOr,2);
+Original_Un = Original_Un(1:end,1);
 
 % MMSE
 % M0001001_S0N90_SNR0_Un
 % F0009005_S0N90_SNR0_Un
-% [Original_MMSE, fs] = audioread('F0002007_S0N90_SNR0_MMSE.wav');
-[Original_MMSE, fs] = audioread('M0001001_S0N90_SNR0_MMSE.wav');
+[Original_MMSE, fs] = audioread('F0002007_S0N90_SNR0_MMSE.wav');
+% [Original_MMSE, fs] = audioread('M0001001_S0N90_SNR0_MMSE.wav');
 % [Original_MMSE, fs] = audioread('F0009005_S0N90_SNR0_MMSE.wav');
-Original_MMSE = Original_MMSE(1:lenOr,2);
+% Original_MMSE = Original_MMSE(1:lenOr,2);
 
 % Wiener
-% [Original_Wiener, fs] = audioread('F0002007_S0N90_SNR0_Wiener.wav');
-[Original_Wiener, fs] = audioread('M0001001_S0N90_SNR0_Wiener.wav');
+[Original_Wiener, fs] = audioread('F0002007_S0N90_SNR0_Wiener.wav');
+% [Original_Wiener, fs] = audioread('M0001001_S0N90_SNR0_Wiener.wav');
 % [Original_Wiener, fs] = audioread('F0009005_S0N90_SNR0_Wiener.wav');
-Original_Wiener = Original_Wiener(1:lenOr,2);
+% Original_Wiener = Original_Wiener(1:lenOr,2);
 
 % Binary Mask
-% [Original_BMsk, fs] = audioread('F0002007_S0N90_SNR0_Binary Mask.wav');
-[Original_BMsk, fs] = audioread('M0001001_S0N90_SNR0_Binary Mask.wav');
+[Original_BMsk, fs] = audioread('F0002007_S0N90_SNR0_Binary Mask.wav');
+% [Original_BMsk, fs] = audioread('M0001001_S0N90_SNR0_Binary Mask.wav');
 % [Original_BMsk, fs] = audioread('F0009005_S0N90_SNR0_Binary Mask.wav');
-Original_BMsk = Original_BMsk(1:lenOr,2);
+% Original_BMsk = Original_BMsk(1:lenOr,2);
 
 % Use the Vocoder with CI simulation and the Cochlear Nucleus simulation
 % Original
@@ -54,13 +55,13 @@ Original_vocoder = CI_Vocoder_Cochlear(Original_sound, fs, 'CI');
 Un_vocoder = CI_Vocoder_Cochlear(Original_Un, fs, 'CI');
 
 % MMSE
-MMSE_vocoder = CI_Vocoder_Cochlear(Original_MMSE, fs, 'CI');
+MMSE_vocoder = CI_Vocoder_Cochlear(Original_MMSE(1:lenOr,1), fs, 'CI');
 
 % Wiener
-Wiener_vocoder = CI_Vocoder_Cochlear(Original_Wiener, fs, 'CI');
+Wiener_vocoder = CI_Vocoder_Cochlear(Original_Wiener(1:lenOr,1), fs, 'CI');
 
 % BMsk
-BMsk_vocoder = CI_Vocoder_Cochlear(Original_BMsk, fs, 'CI');
+BMsk_vocoder = CI_Vocoder_Cochlear(Original_BMsk(1:lenOr,1), fs, 'CI');
 
 % [Vocoded_Male_Cochlear, electrodeband] = CI_Vocoder_Cochlear(Original_MMSE, fs, 'CI');
 % Vocoded_Female_Cochlear_2 = CI_Vocoder_Cochlear(Original_sound, fs, 'CI');

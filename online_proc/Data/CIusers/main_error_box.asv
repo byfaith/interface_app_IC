@@ -100,9 +100,9 @@ rmpath('Adelaide')
 rmpath('p6')
 rmpath('Eliane')
 rmpath('Rosana2')
-rmpath('Danielle')
+rmpath('Rosana2')
 [curveMMSE_5, curveUn_5, curveWiener_5, curveBMsk_5] = ...
-    obtainPsiCurves('cindia', 1, 1, 50);
+    obtainPsiCurves('Danielle', 1, 1, 50);
 
 
 

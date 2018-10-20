@@ -122,16 +122,16 @@ weights = ones(1,length(snrBMsk_values_)); % No weighting
 %% 
 % Plot, case flag == 1
 if flagPlot == 1
-    figure;plot(snr1,'-.')
+    figure;plot(snr1,'-.k','LineWidth',2)
     hold on
 
-    plot(snr3,'-.')
+    plot(snr3,'-.b','LineWidth',2)
     hold on
 
-    plot(snr,'-.')
+    plot(snr,'-.g','LineWidth',2)
     hold on
 
-    plot(snr2)
+    plot(snr2,'r','LineWidth',2)
     hold on
     xlabel('Número de Sentenças')
     ylabel('SNR [dB]')
@@ -149,9 +149,9 @@ if flagPlot == 1
     
     figure;scatter(snr_orderUn, 100.*wrcUn_order,'*r')
     hold on;
-    scatter(snr_orderMMSE, 100.*wrcMMSE_order,'b')
-    scatter(snr_orderWiener, 100.*wrcWiener_order,'*k')
-    scatter(snr_orderBMsk, 100.*wrcBMsk_order,'m')
+    scatter(snr_orderMMSE, 100.*wrcMMSE_order,'k')
+    scatter(snr_orderWiener, 100.*wrcWiener_order,'*b')
+    scatter(snr_orderBMsk, 100.*wrcBMsk_order,'g')
 
 % Try to represent in Boxplot format
 % figure;
@@ -164,11 +164,11 @@ if flagPlot == 1
 
 % logit approximation relation to average values, per algorithm, for one p.
 % figure;
-    plot(curveUn(:,1), 100.*curveUn(:,2),'-r')
+    plot(curveUn(:,1), 100.*curveUn(:,2),'-r','LineWidth',3)
     hold on
-    plot(curveMMSE(:,1), 100.*curveMMSE(:,2), '-b')
-    plot(curveWiener(:,1), 100.*curveWiener(:,2), '-k')
-    plot(curveBMsk(:,1), 100.*curveBMsk(:,2), '-m')
+    plot(curveMMSE(:,1), 100.*curveMMSE(:,2), '-k','LineWidth',3)
+    plot(curveWiener(:,1), 100.*curveWiener(:,2), '-b','LineWidth',3)
+    plot(curveBMsk(:,1), 100.*curveBMsk(:,2), '-g','LineWidth',3)
     h = legend('Não-processado', 'MMSE', 'Wiener', 'Máscara Binária');
     set(h);
     xlabel('SNR[dB]')
@@ -214,12 +214,11 @@ if flagPlot == 1
     h(5) = plot([SRT50BMsk SRT50BMsk],[0 50],'-.k');
 
     % Insert legend
-    h(4) = plot(SRT50Un,50,'rx','DisplayName',['SRT50_{NP} = ' num2str(SRT50Un)]);
-    h(6) = plot(SRT50MMSE,50,'bx','DisplayName',['SRT50_{MMSE} = ' num2str(SRT50MMSE)]);
-    h(7) = plot(SRT50Wiener,50,'kx','DisplayName',['SRT50_{Wiener} = ' num2str(SRT50Wiener)]);
-    h(8) = plot(SRT50BMsk,50,'mx','DisplayName',['SRT50_{MB} = ' num2str(SRT50BMsk)]);
-    legend([h(4) h(6) h(7) h(8)],'location','southeast')
-    
+    h(4) = plot(SRT50Un,50,'rx','DisplayName',['SRT50_{NP} = ' num2str(SRT50Un)],'LineWidth',3,'MarkerSize',10);
+    h(6) = plot(SRT50MMSE,50,'kx','DisplayName',['SRT50_{MMSE} = ' num2str(SRT50MMSE)],'LineWidth',3,'MarkerSize',10);
+    h(7) = plot(SRT50Wiener,50,'bx','DisplayName',['SRT50_{Wiener} = ' num2str(SRT50Wiener)],'LineWidth',3,'MarkerSize',10);
+    h(8) = plot(SRT50BMsk,50,'gx','DisplayName',['SRT50_{MB} = ' num2str(SRT50BMsk)],'LineWidth',3,'MarkerSize',10);
+    lgd = legend([h(4) h(6) h(7) h(8)],'location','southeast');
 % set(gca,'FontSize',22);
 % h=gcf;
 % set(h,'PaperOrientation','landscape');
