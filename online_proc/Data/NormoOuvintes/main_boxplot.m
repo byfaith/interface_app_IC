@@ -108,5 +108,60 @@ h=gcf;
 set(h,'PaperOrientation','landscape');
 set(h,'PaperUnits','normalized');
 set(h,'PaperPosition', [0 0 1 1]);
-print(gcf, '-dpdf', strcat('TaxaRecNormo'));
+% print(gcf, '-dpdf', strcat('TaxaRecNormo'));
 
+
+%% 
+% Aplicar teste Shapiro-Wilk sobre a diferença relativa, para o conjunto 
+% de dados em 10dB
+[H_Un_7, pValue_BMsk_0, W_sw] = swtest(unData(1,:));
+[H_Wn_7, pValue_MMSE_0, W_sw] = swtest(wienerData(1,:));
+[H_MM_7, pValue_Wien_0, W_sw] = swtest(mmseData(1,:));
+
+
+[D, PD] = allfitdist(unData(1,:), 'PDF');
+[D, PD] = allfitdist(errWienerUn_1_10p, 'PDF');
+[D, PD] = allfitdist(errMMSEUn_1_10p, 'PDF');
+    
+
+set(gca,'FontSize',22);
+h=gcf;
+set(h,'PaperOrientation','landscape');
+set(h,'PaperUnits','normalized');
+set(h,'PaperPosition', [0 0 1 1]);
+% print(gcf, '-dpdf', strcat('fdp','MMSE','Metric'));
+
+
+% % % Aplicar teste: ranksum, para cada SNR
+% % 7,5 dB
+% MMSE-Wiener
+[p, h] = ranksum(mmseData(:,1), wienerData(:,1));
+% MMSE-BMsk
+[p, h] = ranksum(mmseData(:,1), bmskData(:,1));
+% Wiener-BMsk
+[p, h] = ranksum(wienerData(:,1), bmskData(:,1));
+
+% % 5 dB
+% MMSE-Wiener
+[p, h] = ranksum(mmseData(:,2), wienerData(:,2));
+% MMSE-BMsk
+[p, h] = ranksum(mmseData(:,2), bmskData(:,2));
+% Wiener-BMsk
+[p, h] = ranksum(wienerData(:,2), bmskData(:,2));
+
+% % 2,5 dB
+% MMSE-Wiener
+[p, h] = ranksum(mmseData(:,3), wienerData(:,3));
+% MMSE-BMsk
+[p, h] = ranksum(mmseData(:,3), bmskData(:,3));
+% Wiener-BMsk
+[p, h] = ranksum(wienerData(:,3), bmskData(:,3));
+
+
+% % 0 dB
+% MMSE-Wiener
+[p, h] = ranksum(mmseData(:,4), wienerData(:,4));
+% MMSE-BMsk
+[p, h] = ranksum(mmseData(:,4), bmskData(:,4));
+% Wiener-BMsk
+[p, h] = ranksum(wienerData(:,4), bmskData(:,4));

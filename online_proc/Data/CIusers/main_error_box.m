@@ -10,7 +10,7 @@ rmpath('Eliane')
 rmpath('P6')
 rmpath('Danielle')
 [curveMMSE_1, curveUn_1, curveWiener_1, curveBMsk_1] = ...
-    obtainPsiCurves('Marina2', 1, -20, 30);
+    obtainPsiCurves('Marina2', 1, -20, 25);
 
 % set(gca,'FontSize',22);
 % h=gcf;
@@ -28,7 +28,7 @@ rmpath('Eliane')
 rmpath('P6')
 rmpath('Danielle')
 [curveMMSE_2, curveUn_2, curveWiener_2, curveBMsk_2] = ...
-    obtainPsiCurves('Rosana', 1, 5, 30);
+    obtainPsiCurves('Rosana', 1, 5, 25);
 
 % set(gca,'FontSize',22);
 % h=gcf;
@@ -81,7 +81,7 @@ rmpath('p6')
 rmpath('Eliane')
 rmpath('Rosana2')
 [curveMMSE_5, curveUn_5, curveWiener_5, curveBMsk_5] = ...
-    obtainPsiCurves('Danielle', 1, 1, 50);
+    obtainPsiCurves('Danielle', 1, 1, 45);
 
 
 % set(gca,'FontSize',22);
@@ -101,8 +101,17 @@ rmpath('p6')
 rmpath('Eliane')
 rmpath('Rosana2')
 rmpath('Danielle')
-[curveMMSE_5, curveUn_5, curveWiener_5, curveBMsk_5] = ...
-    obtainPsiCurves('cindia', 1, 1, 50);
+[curveMMSE_6, curveUn_6, curveWiener_6, curveBMsk_6] = ...
+    obtainPsiCurves('cindia', 1, 5, 40);
+
+
+% set(gca,'FontSize',22);
+% h=gcf;
+% set(h,'PaperOrientation','landscape');
+% set(h,'PaperUnits','normalized');
+% set(h,'PaperPosition', [0 0 1 1]);
+% print(gcf, '-dpdf', strcat('twodownS7'));
+% print(gcf, '-dpdf', strcat('logitS7'));
 
 
 
@@ -141,6 +150,9 @@ rmpath('Danielle')
 % UMA IDEIA DE QUAL ALGORITMO APRESENTA MENOR DESVIO SOBRE OS RESULTADOS..
 % NA VERDADE, MELHOR OBTER O DESVIO PADRÃO!
 % fonte: https://link.springer.com/content/pdf/10.3758/BF03211350.pdf
+
+
+%% Analyse data distribution
 
 
 
@@ -191,6 +203,13 @@ curveBMsk_5 = curveBMsk_5(find((curveBMsk_5(:,2) > 0.001) & (curveBMsk_5(:,2) < 
 curveWiener_5 = curveWiener_5(find((curveWiener_5(:,2) > 0.001) & (curveWiener_5(:,2) < 0.01),1,'last'):find((curveWiener_5(:,2) < 1.0) & (curveWiener_5(:,2) > 0.99),1,'first'),:);
 curveMMSE_5 = curveMMSE_5(find((curveMMSE_5(:,2) > 0.001) & (curveMMSE_5(:,2) < 0.025),1,'last'):find((curveMMSE_5(:,2) < 1.0) & (curveMMSE_5(:,2) > 0.99),1,'first'),:);
 curveUn_5 = curveUn_5(find((curveUn_5(:,2) > 0.001) & (curveUn_5(:,2) < 0.01),1,'last'):find((curveUn_5(:,2) < 1.0) & (curveUn_5(:,2) > 0.99),1,'first'),:);
+
+% S6
+curveBMsk_6 = curveBMsk_6(find((curveBMsk_6(:,2) > 0.001) & (curveBMsk_6(:,2) < 0.01),1,'last'):find((curveBMsk_6(:,2) < 1.0) & (curveBMsk_6(:,2) > 0.99),1,'first'),:);
+curveWiener_6 = curveWiener_6(find((curveWiener_6(:,2) > 0.001) & (curveWiener_6(:,2) < 0.01),1,'last'):find((curveWiener_6(:,2) < 1.0) & (curveWiener_6(:,2) > 0.99),1,'first'),:);
+curveMMSE_6 = curveMMSE_6(find((curveMMSE_6(:,2) > 0.001) & (curveMMSE_6(:,2) < 0.025),1,'last'):find((curveMMSE_6(:,2) < 1.0) & (curveMMSE_6(:,2) > 0.99),1,'first'),:);
+curveUn_6 = curveUn_6(find((curveUn_6(:,2) > 0.001) & (curveUn_6(:,2) < 0.01),1,'last'):find((curveUn_6(:,2) < 1.0) & (curveUn_6(:,2) > 0.99),1,'first'),:);
+
 
 
 % Resample set of data based on higher vector
@@ -365,6 +384,30 @@ ylabel('Distancia relativa ao sinal não-processado')
     curveMMSER_5 = resample(curveMMSE_5(I25nM_5:I25pM_5,1), length(curveUn_5(I25nU_5:I25pU_5,1)), length(curveMMSE_5(I25nM_5:I25pM_5,1)));    
     errMMSEUn_5_0 = (fact.*(curveMMSER_5 - curveUn_5(I25nU_5:I25pU_5,1)));
     
+    
+    
+    
+    [~,I25nU_6] = min(abs(100*curveUn_6(:,1)+100*2.5));
+    [~,I25pU_6] = min(abs(100*curveUn_6(:,1)-100*2.5));
+    
+    [~,I25nM_6] = min(abs(100*curveMMSE_6(:,1)+100*2.5));
+    [~,I25pM_6] = min(abs(100*curveMMSE_6(:,1)-100*2.5));
+    
+    [~,I25nB_6] = min(abs(100*curveBMsk_6(:,1)+100*2.5));
+    [~,I25pB_6] = min(abs(100*curveBMsk_6(:,1)-100*2.5));
+
+    [~,I25nW_6] = min(abs(100*curveWiener_6(:,1)+100*2.5));
+    [~,I25pW_6] = min(abs(100*curveWiener_6(:,1)-100*2.5));    
+    
+    curveBMskR_6 = resample(curveBMsk_6(I25nB_6:I25pB_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveBMsk_6(I25nB_6:I25pB_6,1)));
+    errBMskUn_6_0   = (fact.*(curveBMskR_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+    
+    curveWienerR_6 = resample(curveWiener_6(I25nW_6:I25pW_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveWiener_6(I25nW_6:I25pW_6,1)));    
+    errWienerUn_6_0  = (fact.*(curveWienerR_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+    
+    curveMMSER_6 = resample(curveMMSE_6(I25nM_6:I25pM_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveMMSE_6(I25nM_6:I25pM_6,1)));    
+    errMMSEUn_6_0 = (fact.*(curveMMSER_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+    
 %     ------- center of 5 SNR for subj. 1
     
 % 	fact = -1;
@@ -479,6 +522,30 @@ ylabel('Distancia relativa ao sinal não-processado')
    
     curveMMSER_5 = resample(curveMMSE_5(I25nM_5:I25pM_5,1), length(curveUn_5(I25nU_5:I25pU_5,1)), length(curveMMSE_5(I25nM_5:I25pM_5,1)));    
     errMMSEUn_5_5 = (fact.*(curveMMSER_5 - curveUn_5(I25nU_5:I25pU_5,1)));
+    
+    
+    
+    [~,I25nU_6] = min(abs(100*curveUn_5(:,1)-100*2.5));
+    [~,I25pU_6] = min(abs(100*curveUn_5(:,1)-100*7.5));
+    
+    [~,I25nM_6] = min(abs(100*curveMMSE_5(:,1)-100*2.5));
+    [~,I25pM_6] = min(abs(100*curveMMSE_5(:,1)-100*7.5));
+    
+    [~,I25nB_6] = min(abs(100*curveBMsk_5(:,1)-100*2.5));
+    [~,I25pB_6] = min(abs(100*curveBMsk_5(:,1)-100*7.5));
+
+    [~,I25nW_6] = min(abs(100*curveWiener_5(:,1)-100*2.5));
+    [~,I25pW_6] = min(abs(100*curveWiener_5(:,1)-100*7.5));
+    
+    curveBMskR_6 = resample(curveBMsk_6(I25nB_6:I25pB_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveBMsk_6(I25nB_6:I25pB_6,1)));
+    errBMskUn_6_5   = (fact.*(curveBMskR_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+    
+    curveWienerR_6 = resample(curveWiener_6(I25nW_6:I25pW_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveWiener_6(I25nW_6:I25pW_6,1)));    
+    errWienerUn_6_5  = (fact.*(curveWienerR_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+   
+    curveMMSER_6 = resample(curveMMSE_6(I25nM_6:I25pM_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveMMSE_6(I25nM_6:I25pM_6,1)));    
+    errMMSEUn_6_5 = (fact.*(curveMMSER_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+    
     
 %     ------- center of 5 SNR for subj. 1
      
@@ -598,6 +665,29 @@ ylabel('Distancia relativa ao sinal não-processado')
     
     curveMMSER_5 = resample(curveMMSE_5(I25nM_5:I25pM_5,1), length(curveUn_5(I25nU_5:I25pU_5,1)), length(curveMMSE_5(I25nM_5:I25pM_5,1)));    
     errMMSEUn_5_5n = (fact.*(curveMMSER_5 - curveUn_5(I25nU_5:I25pU_5,1)));
+    
+    
+    [~,I25nU_6] = min(abs(100*curveUn_6(:,1)+100*7.5));
+    [~,I25pU_6] = min(abs(100*curveUn_6(:,1)+100*2.5));
+   
+    [~,I25nM_6] = min(abs(100*curveMMSE_6(:,1)+100*7.5));
+    [~,I25pM_6] = min(abs(100*curveMMSE_6(:,1)+100*2.5));
+    
+    [~,I25nB_6] = min(abs(100*curveBMsk_6(:,1)+100*7.5));
+    [~,I25pB_6] = min(abs(100*curveBMsk_6(:,1)+100*2.5));
+
+    [~,I25nW_6] = min(abs(100*curveWiener_6(:,1)+100*7.5));
+    [~,I25pW_6] = min(abs(100*curveWiener_6(:,1)+100*2.5));
+    
+    curveBMskR_6 = resample(curveBMsk_6(I25nB_6:I25pB_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveBMsk_6(I25nB_6:I25pB_6,1)));
+    errBMskUn_6_5n   = (fact.*(curveBMskR_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+    
+    curveWienerR_6 = resample(curveWiener_6(I25nW_6:I25pW_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveWiener_6(I25nW_6:I25pW_6,1)));    
+    errWienerUn_6_5n  = (fact.*(curveWienerR_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+    
+    curveMMSER_6 = resample(curveMMSE_6(I25nM_6:I25pM_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveMMSE_6(I25nM_6:I25pM_6,1)));    
+    errMMSEUn_6_5n = (fact.*(curveMMSER_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+    
 %     ------- center of -5 SNR for subj.     
     
     
@@ -716,6 +806,30 @@ ylabel('Distancia relativa ao sinal não-processado')
     
     curveMMSER_5 = resample(curveMMSE_5(I25nM_5:I25pM_5,1), length(curveUn_5(I25nU_5:I25pU_5,1)), length(curveMMSE_5(I25nM_5:I25pM_5,1)));    
     errMMSEUn_5_10n = (fact.*(curveMMSER_5 - curveUn_5(I25nU_5:I25pU_5,1)));
+    
+    
+    
+    
+    [~,I25nU_6] = min(abs(curveUn_6(:,1)+12.5));
+    [~,I25pU_6] = min(abs(curveUn_6(:,1)+7.5));
+    
+    [~,I25nM_6] = min(abs(curveMMSE_6(:,1)+12.5));
+    [~,I25pM_6] = min(abs(curveMMSE_6(:,1)+7.5));
+    
+    [~,I25nB_6] = min(abs(curveBMsk_6(:,1)+12.5));
+    [~,I25pB_6] = min(abs(curveBMsk_6(:,1)+7.5));
+
+    [~,I25nW_6] = min(abs(curveWiener_6(:,1)+12.5));
+    [~,I25pW_6] = min(abs(curveWiener_6(:,1)+7.5));
+    
+    curveBMskR_6 = resample(curveBMsk_6(I25nB_6:I25pB_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveBMsk_6(I25nB_6:I25pB_6,1)));
+    errBMskUn_6_10n   = (fact.*(curveBMskR_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+    
+    curveWienerR_6 = resample(curveWiener_6(I25nW_6:I25pW_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveWiener_6(I25nW_6:I25pW_6,1)));    
+    errWienerUn_6_10n  = (fact.*(curveWienerR_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+    
+    curveMMSER_6 = resample(curveMMSE_6(I25nM_6:I25pM_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveMMSE_6(I25nM_6:I25pM_6,1)));    
+    errMMSEUn_6_10n = (fact.*(curveMMSER_6 - curveUn_6(I25nU_6:I25pU_6,1)));
     
 %     ------- center of -10 SNR for subj. 1
     
@@ -837,6 +951,30 @@ ylabel('Distancia relativa ao sinal não-processado')
     curveMMSER_5 = resample(curveMMSE_5(I25nM_5:I25pM_5,1), length(curveUn_5(I25nU_5:I25pU_5,1)), length(curveMMSE_5(I25nM_5:I25pM_5,1)));    
     errMMSEUn_5_10p = (fact.*(curveMMSER_5 - curveUn_5(I25nU_5:I25pU_5,1)));
     
+    
+    
+    
+    [~,I25nU_6] = min(abs(curveUn_6(:,1)-7.5));
+    [~,I25pU_6] = min(abs(curveUn_6(:,1)-12.5));
+    
+    [~,I25nM_6] = min(abs(curveMMSE_6(:,1)-7.5));
+    [~,I25pM_6] = min(abs(curveMMSE_6(:,1)-12.5));
+    
+    [~,I25nB_6] = min(abs(curveBMsk_6(:,1)-7.5));
+    [~,I25pB_6] = min(abs(curveBMsk_6(:,1)-12.5));
+
+    [~,I25nW_6] = min(abs(curveWiener_6(:,1)-7.5));
+    [~,I25pW_6] = min(abs(curveWiener_6(:,1)-12.5));
+   
+    curveBMskR_6 = resample(curveBMsk_6(I25nB_6:I25pB_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveBMsk_6(I25nB_6:I25pB_6,1)));
+    errBMskUn_6_10p   = (fact.*(curveBMskR_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+    
+    curveWienerR_6 = resample(curveWiener_6(I25nW_6:I25pW_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveWiener_6(I25nW_6:I25pW_6,1)));    
+    errWienerUn_6_10p  = (fact.*(curveWienerR_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+    
+    curveMMSER_6 = resample(curveMMSE_6(I25nM_6:I25pM_6,1), length(curveUn_6(I25nU_6:I25pU_6,1)), length(curveMMSE_6(I25nM_6:I25pM_6,1)));    
+    errMMSEUn_6_10p = (fact.*(curveMMSER_6 - curveUn_6(I25nU_6:I25pU_6,1)));
+    
 %     ------- center of 10 SNR for subj. 1
 
 % 	-- -10dB
@@ -887,30 +1025,30 @@ ylabel('Distancia relativa ao sinal não-processado')
 
     % -- BMsk
     figure 
-    h4 = boxplot([[errBMskUn_1_10n; errBMskUn_2_10n; errBMskUn_3_10n; errBMskUn_4_10n; errBMskUn_5_10n],...
-        [errBMskUn_1_5n; errBMskUn_2_5n; errBMskUn_3_5n; errBMskUn_4_5n; errBMskUn_5_5n],...
-        [mean(errBMskUn_1_0); mean(errBMskUn_2_0); mean(errBMskUn_3_0); mean(errBMskUn_4_0); mean(errBMskUn_5_0)],...
-        [mean(errBMskUn_1_5); mean(errBMskUn_2_5); mean(errBMskUn_3_5); mean(errBMskUn_4_5); mean(errBMskUn_5_5)],...
-        [mean(errBMskUn_1_10p); mean(errBMskUn_2_10p); mean(errBMskUn_3_10p); mean(errBMskUn_4_10p); mean(errBMskUn_5_10p)]], 'positions', [0 27 54 81 108],...
+    h4 = boxplot([[errBMskUn_1_10n; errBMskUn_2_10n; errBMskUn_3_10n; errBMskUn_4_10n; errBMskUn_5_10n; errBMskUn_6_10n],...
+        [errBMskUn_1_5n; errBMskUn_2_5n; errBMskUn_3_5n; errBMskUn_4_5n; errBMskUn_5_5n; errBMskUn_6_5n],...
+        [mean(errBMskUn_1_0); mean(errBMskUn_2_0); mean(errBMskUn_3_0); mean(errBMskUn_4_0); mean(errBMskUn_5_0); mean(errBMskUn_6_0)],...
+        [mean(errBMskUn_1_5); mean(errBMskUn_2_5); mean(errBMskUn_3_5); mean(errBMskUn_4_5); mean(errBMskUn_5_5); mean(errBMskUn_6_5)],...
+        [mean(errBMskUn_1_10p); mean(errBMskUn_2_10p); mean(errBMskUn_3_10p); mean(errBMskUn_4_10p); mean(errBMskUn_5_10p); mean(errBMskUn_6_10p)]], 'positions', [0 27 54 81 108],...
         'Labels', {'-10', '-5', '0', '5', '10'}, 'colors', 'g', 'width',5);
     
     hold on
 
     % -- Wiener
-    h3 = boxplot([[errWienerUn_1_10n; errWienerUn_2_10n; errWienerUn_3_10n; errWienerUn_4_10n; errWienerUn_5_10n],...
-        [errWienerUn_1_5n; errWienerUn_2_5n; errWienerUn_3_5n; errWienerUn_4_5n; errWienerUn_5_5n],...
-        [mean(errWienerUn_1_0); mean(errWienerUn_2_0); mean(errWienerUn_3_0); mean(errWienerUn_4_0); mean(errWienerUn_5_0)],...
-        [mean(errWienerUn_1_5); mean(errWienerUn_2_5); mean(errWienerUn_3_5); mean(errWienerUn_4_5); mean(errWienerUn_5_5)],...
-        [mean(errWienerUn_1_10p); mean(errWienerUn_2_10p); mean(errWienerUn_3_10p); mean(errWienerUn_4_10p); mean(errWienerUn_5_10p)]], 'positions', [9 36 63 90 117],...
+    h3 = boxplot([[errWienerUn_1_10n; errWienerUn_2_10n; errWienerUn_3_10n; errWienerUn_4_10n; errWienerUn_5_10n; errWienerUn_6_10n],...
+        [errWienerUn_1_5n; errWienerUn_2_5n; errWienerUn_3_5n; errWienerUn_4_5n; errWienerUn_5_5n; errWienerUn_6_5n],...
+        [mean(errWienerUn_1_0); mean(errWienerUn_2_0); mean(errWienerUn_3_0); mean(errWienerUn_4_0); mean(errWienerUn_5_0); mean(errWienerUn_6_0)],...
+        [mean(errWienerUn_1_5); mean(errWienerUn_2_5); mean(errWienerUn_3_5); mean(errWienerUn_4_5); mean(errWienerUn_5_5); mean(errWienerUn_6_5)],...
+        [mean(errWienerUn_1_10p); mean(errWienerUn_2_10p); mean(errWienerUn_3_10p); mean(errWienerUn_4_10p); mean(errWienerUn_5_10p); mean(errWienerUn_6_10p)]], 'positions', [9 36 63 90 117],...
         'Labels', {'-10', '-5', '0', '5', '10'}, 'colors', 'b', 'width',5);    
     
     
     % -- MMSE
-    h2 = boxplot([[errMMSEUn_1_10n; errMMSEUn_2_10n; errMMSEUn_3_10n; errMMSEUn_4_10n; errMMSEUn_5_10n],...
-        [errMMSEUn_1_5n; errMMSEUn_2_5n; errMMSEUn_3_5n; errMMSEUn_4_5n; errMMSEUn_5_5n],...
-        [mean(errMMSEUn_1_0); mean(errMMSEUn_2_0); mean(errMMSEUn_3_0); mean(errMMSEUn_4_0); mean(errMMSEUn_5_0)],...
-        [mean(errMMSEUn_1_5); mean(errMMSEUn_2_5); mean(errMMSEUn_3_5); mean(errMMSEUn_4_5); mean(errMMSEUn_5_5)],...
-        [mean(errMMSEUn_1_10p); mean(errMMSEUn_2_10p); mean(errMMSEUn_3_10p); mean(errMMSEUn_4_10p); mean(errMMSEUn_5_10p)]], 'positions', [18 45 72 99 126],...
+    h2 = boxplot([[errMMSEUn_1_10n; errMMSEUn_2_10n; errMMSEUn_3_10n; errMMSEUn_4_10n; errMMSEUn_5_10n; errMMSEUn_6_10n],...
+        [errMMSEUn_1_5n; errMMSEUn_2_5n; errMMSEUn_3_5n; errMMSEUn_4_5n; errMMSEUn_5_5n; errMMSEUn_6_5n],...
+        [mean(errMMSEUn_1_0); mean(errMMSEUn_2_0); mean(errMMSEUn_3_0); mean(errMMSEUn_4_0); mean(errMMSEUn_5_0); mean(errMMSEUn_6_0)],...
+        [mean(errMMSEUn_1_5); mean(errMMSEUn_2_5); mean(errMMSEUn_3_5); mean(errMMSEUn_4_5); mean(errMMSEUn_5_5); mean(errMMSEUn_6_5)],...
+        [mean(errMMSEUn_1_10p); mean(errMMSEUn_2_10p); mean(errMMSEUn_3_10p); mean(errMMSEUn_4_10p); mean(errMMSEUn_5_10p); mean(errMMSEUn_6_10p)]], 'positions', [18 45 72 99 126],...
         'Labels', {'-10', '-5', '0', '5', '10'}, 'colors', 'k', 'width',5);      
     
     
